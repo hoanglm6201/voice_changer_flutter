@@ -34,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
     AudioEffectService.stopAudio();
   }
 
-  void onIndexChanged(){
+  void onIndexChanged(int value){
     setState(() {
-      ++_currentIndex;
+      _currentIndex = value;
     });
   }
 
@@ -50,22 +50,45 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.grey,
         child: Center(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(listEffects()[_currentIndex].name, style: TextStyle(color: Colors.blue, fontSize: 24),),
-              TextButton(
-                onPressed: (){
-                  applyEffect(listEffects()[_currentIndex > 0? _currentIndex - 1 : _currentIndex]);
-                  onIndexChanged();
-                },
-                child: Text('Play Audio', style: TextStyle(color: Colors.black, fontSize: 24),)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(listEffects()[_currentIndex].name, style: TextStyle(color: Colors.blue, fontSize: 24),),
+                  TextButton(
+                      onPressed: (){
+                        stopAudio();
+                      },
+                      child: Text('Stop Audio', style: TextStyle(color: Colors.red, fontSize: 24),)
+                  ),
+                ],
               ),
-              TextButton(
-                  onPressed: (){
-                    stopAudio();
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.only(bottom: 100),
+                  shrinkWrap: true,
+                  itemCount: listEffects().length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: (){
+                        applyEffect(listEffects()[index]);
+                        onIndexChanged(index);
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey,
+                          border: Border.all(color: Colors.white)
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(listEffects()[index].name, style: TextStyle(fontSize: 18),),
+                      ),
+                    );
                   },
-                  child: Text('Stop Audio', style: TextStyle(color: Color(0xFF27100A), fontSize: 24),)
-              ),
+                ),
+              )
+
             ],
           ),
         ),
