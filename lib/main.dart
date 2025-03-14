@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:voice_changer_flutter/service_locator/service_locator.dart';
+import 'package:voice_changer_flutter/service/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/splash/splash_screen.dart';
 import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
