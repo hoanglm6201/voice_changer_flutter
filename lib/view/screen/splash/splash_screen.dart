@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/constants/app_info.dart';
+import 'package:voice_changer_flutter/core/res/colors.dart';
+import 'package:voice_changer_flutter/core/res/images.dart';
+import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
+import 'package:voice_changer_flutter/view/screen/language/language_screen.dart';
+import 'package:voice_changer_flutter/view/widgets/progress_bar/gradient_progress_bar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,8 +16,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver {
-
+class _SplashScreenState extends State<SplashScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -27,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if(state == AppLifecycleState.paused) {
+    if (state == AppLifecycleState.paused) {
       // AdController.shared.toggleResumeAdDisabled(true);
     }
-    if(state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed) {
       // AdController.shared.toggleResumeAdDisabled(false);
     }
   }
@@ -45,10 +50,10 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     // final isFirstOpenApp = Provider.of<AppStateProvider>(context, listen: false).isFirstOpenApp;
 
     // if (isFirstOpenApp) {
-    //   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const LanguageScreen(isFromSetting: false,)));
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const LanguageScreen(isFromSetting: false,)));
     // } else {
-      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const HomeScreen()));
-      // Provider.of<AppSettingsProvider>(context, listen: false).increaseTimeOpenApp();
+    //   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const HomeScreen()));
+    // Provider.of<AppSettingsProvider>(context, listen: false).increaseTimeOpenApp();
     // }
   }
 
@@ -56,48 +61,61 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.greenAccent
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(ResImages.appIcon),
+            const SizedBox(
+              height: 12,
             ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 72,),
-                ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.asset(AppInfo.appIcon, width: 81, height: 81, fit: BoxFit.cover,)),
-                const SizedBox(height: 12,),
-                const Text('Voice Changer', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),),
-                const SizedBox(height: 20,),
-                FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0.0, end: 1.0),
-                    duration: const Duration(seconds: 2), // Thời gian hoàn thành
-                    builder: (context, value, child) {
-                      return LinearProgressIndicator(
-                        value: value,
-                        backgroundColor: Colors.white.withValues(alpha: 0.1),
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        minHeight: 8
-                      );
-                    },
-                    onEnd: _navigateToHome,
-                  )
-                ),
-              ],
+            Image.asset(ResImages.appName),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "LOADING ...",
+              style: TextStyle(
+                color: ResColors.textColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+            ),
+            ResSpacing.h16,
+            FractionallySizedBox(
+              widthFactor: 0.8,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0.0, end: 1.0),
+                duration: const Duration(seconds: 2),
+                builder: (context, value, child) {
+                  return GradientProgressBar(
+                    percent: (value * 100).toInt(),
+                    gradient: ResColors.primaryGradient,
+                    backgroundColor: ResColors.colorGray.withValues(alpha: 0.15),
+                  );
+                },
+                onEnd: _navigateToHome,
+              ),
+            ),
+            ResSpacing.h16,
+            Text(
+              "This action may contain ads",
+              style: TextStyle(
+                color: ResColors.textColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+              ),
             )
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voice_changer_flutter/core/enum/language_enum.dart';
-import 'package:voice_changer_flutter/core/utils/icons.dart';
+import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 
 extension LanguageExtension on LanguageEnum {

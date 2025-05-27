@@ -1,5 +1,16 @@
 {
   "@@locale": "en",
   "hello": "Hello",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "language": "Language",
+  "next": "Next",
+  "start": "Start",
+  "title_onboarding_1": "AI Voice Changer",
+  "sub_title_onboarding_1": "Conveniently switch between multiple voice effects including robot, alien & monster!",
+  "title_onboarding_2": "Prank Sound",
+  "sub_title_onboarding_2": "Enjoy prank sounds like fart, scream or gun to surprise your friends!",
+  "title_onboarding_3": "Famous Voices",
+  "sub_title_onboarding_3": "Effortlessly use celebrity voice presets to sound like your favorite stars",
+  "title_onboarding_4": "Funny Reels",
+  "sub_title_onboarding_4": "Discover various hilarious prank reels using realistic voice filters!"
 }
