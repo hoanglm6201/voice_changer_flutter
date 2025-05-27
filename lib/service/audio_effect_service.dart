@@ -18,4 +18,12 @@ class AudioEffectService {
       print("Error stopping audio: $e");
     }
   }
+
+  static Future<void> processVideo() async {
+    try {
+      await _channel.invokeMethod('processVideo');
+    } catch (e) {
+      print("Error processVideo: $e");
+    }
+  }
 }

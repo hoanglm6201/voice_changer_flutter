@@ -34,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
     AudioEffectService.stopAudio();
   }
 
+  void processVideo() {
+    AudioEffectService.processVideo();
+  }
+
   void onIndexChanged(int value){
     setState(() {
       _currentIndex = value;
@@ -62,6 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text('Stop Audio', style: TextStyle(color: Colors.red, fontSize: 24),)
                   ),
                 ],
+              ),
+              TextButton(
+                  onPressed: (){
+                    processVideo();
+                  },
+                  child: Text('Process Audio', style: TextStyle(color: Colors.red, fontSize: 24),)
               ),
               Expanded(
                 child: ListView.builder(

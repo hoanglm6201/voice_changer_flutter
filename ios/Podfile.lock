@@ -61,16 +61,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
-  in_app_purchase_storekit: a1ce04056e23eecc666b086040239da7619cd783
-  in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
-  open_settings_plus: 4bd848866fea2becc124581d868a6164cf768831
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  purchases_flutter: af24717c282747d54ee718db91a946629e1530b8
+  flutter_localization: 72299fb6cb4e51cae587bd953ed0b958040b71e6
+  in_app_purchase_storekit: d1a48cb0f8b29dbf5f85f782f5dd79b21b90a5e6
+  in_app_review: 5596fe56fab799e8edb3561c03d053363ab13457
+  open_settings_plus: d19f91e8a04649358a51c19b484ce2e637149d70
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  purchases_flutter: da84b1c99daa6c94f77c4e812b5a096ea8eb9916
   PurchasesHybridCommon: f27e7fe57a9934319373b10c260db5d6c10bbb64
   RevenueCat: 4be87c151dff652d2a5b7af46073db11f01ad93f
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 

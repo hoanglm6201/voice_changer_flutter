@@ -108,6 +108,28 @@ import UIKit
                   } else if call.method == "stopAudio" {
                       self.audioPlayerVM.stopAudio()
                       result(nil)
+                  } else if call.method == "processVideo" {
+                      guard let videoURL = Bundle.main.url(forResource: "video", withExtension: "mp4") else {
+                          print("Audio file not found demo voice")
+                          return
+                      }
+
+                      let effect = Effects(speed: 1.2, pitch: 1200) // Tạo hiệu ứng tùy chỉnh
+                      
+                      let outputUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("output.mp4")
+
+                      if FileManager.default.fileExists(atPath: outputUrl.path) {
+                          do {
+                              try FileManager.default.removeItem(at: outputUrl)
+                              print("🗑 Đã xoá file cũ: \(outputUrl)")
+                          } catch {
+                              print("❌ Lỗi khi xoá file: \(error)")
+                          }
+                      }
+                      
+                      self.audioPlayerVM.processVideoWithEffect(videoUrl: videoURL, effect: effect, outputUrl: outputUrl)
+                      print(outputUrl)
+                      result(nil)
                   } else {
                       result(FlutterMethodNotImplemented)
                   }
