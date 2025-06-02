@@ -2,11 +2,16 @@ import 'package:base_ui_flutter_v1/base_ui_flutter_v1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:voice_changer_flutter/constants/key_share_preference.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/text/text_gradient.dart';
+import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -18,6 +23,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
 
   PageController controller = PageController();
+  final _prefs = ServiceLocator.instance.get<SharedPreferences>();
   int activePageIndex = 0;
 
   @override
@@ -31,8 +37,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             activePageIndex = value;
           });
         },
-        onNext: () {
+        onNext: () async {
           if (activePageIndex == 3) {
+            context.read<AppStateProvider>().setFirstOpenApp();
             Navigator.pushReplacement(
               context,
               CupertinoPageRoute(

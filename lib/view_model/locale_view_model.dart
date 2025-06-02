@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voice_changer_flutter/constants/key_share_preference.dart';
 import 'package:voice_changer_flutter/core/enum/language_enum.dart';
 import 'package:voice_changer_flutter/core/extensions/language_extension.dart';
-import 'package:voice_changer_flutter/service/service_locator.dart';
+import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 
 
 class LocateViewModel extends ChangeNotifier {

@@ -3,20 +3,36 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/font.dart';
-import 'package:voice_changer_flutter/service/service_locator.dart';
+import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/language/language_screen.dart';
 import 'package:voice_changer_flutter/view/screen/splash/splash_screen.dart';
+import 'package:voice_changer_flutter/view_model/ads_provider.dart';
+import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:voice_changer_flutter/view_model/purchase_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await ServiceLocator.instance.initialise();
 
+  final purchaseProvider = PurchaseProvider();
+  final adsProvider = AdsProvider();
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => LocateViewModel()),
+      ChangeNotifierProvider(create: (_) => purchaseProvider),
+      ChangeNotifierProvider(create: (_) => adsProvider),
+      ChangeNotifierProxyProvider2<AdsProvider, PurchaseProvider, AppStateProvider>(
+        create: (_) => AppStateProvider(adsProvider, purchaseProvider),
+        update: (_, ads, purchase, appState) {
+          appState?.updateDependencies(ads, purchase);
+          return appState ?? AppStateProvider(ads, purchase);
+        },
+        lazy: false,
+      ),
     ], child: const MyApp()),
   );
   configLoading();

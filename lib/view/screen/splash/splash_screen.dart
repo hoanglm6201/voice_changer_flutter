@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voice_changer_flutter/constants/app_info.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
+import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
 import 'package:voice_changer_flutter/view/screen/language/language_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/progress_bar/gradient_progress_bar.dart';
+import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,8 +19,10 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with WidgetsBindingObserver {
+class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver {
+
+  final _prefs = ServiceLocator.instance.get<SharedPreferences>();
+
   @override
   void initState() {
     super.initState();
@@ -47,14 +52,14 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _navigateToHome() async {
     // AdController.shared.toggleResumeAdDisabled(false);
-    // final isFirstOpenApp = Provider.of<AppStateProvider>(context, listen: false).isFirstOpenApp;
+    final isFirstOpenApp = Provider.of<AppStateProvider>(context, listen: false).isFirstOpenApp;
 
-    // if (isFirstOpenApp) {
+    if (isFirstOpenApp) {
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const LanguageScreen(isFromSetting: false,)));
-    // } else {
-    //   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const HomeScreen()));
+    } else {
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const HomeScreen()));
     // Provider.of<AppSettingsProvider>(context, listen: false).increaseTimeOpenApp();
-    // }
+    }
   }
 
   @override
