@@ -7,6 +7,8 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
 import 'package:voice_changer_flutter/view/screen/library/library_screen.dart';
+import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
+import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -38,6 +40,30 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     _getScreenAt(_selectedIndex);
     return Scaffold(
+      appBar: AppBarCustom(
+        leading: IconButtonCustom(
+          icon: SvgPicture.asset(ResIcon.icUpload),
+          onPressed: () {},
+          style: const IconButtonCustomStyle(
+            backgroundColor: Colors.white,
+            iconColor: Colors.white,
+            borderRadius: 15,
+            padding: EdgeInsets.all(11.0),
+          ),
+        ),
+        actions: [
+          IconButtonCustom(
+            icon: SvgPicture.asset(ResIcon.icSetting),
+            onPressed: () {},
+            style: const IconButtonCustomStyle(
+              backgroundColor: Colors.white,
+              iconColor: Colors.white,
+              borderRadius: 15,
+              padding: EdgeInsets.all(11.0),
+            ),
+          ),
+        ],
+      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: List.generate(_screenBuilders.length, (index) {
@@ -71,7 +97,7 @@ class _MainViewState extends State<MainView> {
               child: SvgPicture.asset(
                 ResIcon.icMic,
                 width: 30,
-                height: 30,
+                height: 34,
               ),
             ),
           ),

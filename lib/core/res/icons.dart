@@ -25,4 +25,5 @@ class ResIcon {
   static const String icBack = '${_basePath}ic_back.svg';
   static const String icRotateCamera = '${_basePath}ic_rotate_camera.svg';
   static const String icPause = '${_basePath}ic_pause.svg';
+  static const String icAvatarLib = '${_basePath}ic_avatar_lib.svg';
 }

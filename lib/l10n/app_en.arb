@@ -28,5 +28,8 @@
   "sub_banner_home": "Experience the magic of changing your voice with AI!",
   "let_go": "Let's Go",
   "hot_voices": "Hot Voices",
-  "see_more": "See More >>"
+  "see_more": "See More >>",
+  "ai_voices" : "AI Voices",
+  "share": "Share",
+  "delete": "Delete"
 }
