@@ -21,4 +21,5 @@ class ResIcon {
   static const String icCheck = '${_basePath}ic_check.svg';
   static const String icMic = '${_basePath}ic_mic.svg';
   static const String icFire = '${_basePath}ic_fire.svg';
+  static const String icBack = '${_basePath}ic_back.svg';
 }
