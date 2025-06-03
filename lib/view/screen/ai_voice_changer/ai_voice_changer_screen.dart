@@ -17,7 +17,9 @@ class AiVoiceChangerScreen extends StatelessWidget {
         title: Text(context.locale.voice_list, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icBack),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
             iconColor: Colors.white,
