@@ -14,8 +14,7 @@ class VoiceModel {
   });
 }
 
-List<VoiceModel> voiceList = [
-  // Celebrities and public figures voices
+List<VoiceModel> aiVoiceChanger = [
   VoiceModel(
     id: const Uuid().v4(),
     name: 'Ariana Grande',
@@ -61,6 +60,14 @@ List<VoiceModel> voiceList = [
     name: 'The rock',
     image: ResImages.theRock,
   ),
+];
+
+List<VoiceModel> voiceList = [
+
+
+  // Celebrities and public figures voices
+
+  ...aiVoiceChanger,
 
   // Cartoon voices
   VoiceModel(
@@ -114,6 +121,7 @@ List<VoiceModel> voiceList = [
     image: ResImages.ton,
   ),
 
+
   // Game and pop culture icons voices
   VoiceModel(
     id: const Uuid().v4(),
@@ -136,3 +144,4 @@ List<VoiceModel> voiceList = [
     image: ResImages.mazio,
   ),
 ];
+
