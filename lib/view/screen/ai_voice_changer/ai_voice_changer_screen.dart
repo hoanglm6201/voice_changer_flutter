@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
+import 'package:voice_changer_flutter/view/widgets/item/voices_item.dart';
 
 class AiVoiceChangerScreen extends StatelessWidget {
   const AiVoiceChangerScreen({super.key});
@@ -26,7 +28,7 @@ class AiVoiceChangerScreen extends StatelessWidget {
       ),
       body: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        itemCount: 15,
+        itemCount: aiVoiceChanger.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
@@ -34,7 +36,8 @@ class AiVoiceChangerScreen extends StatelessWidget {
           mainAxisSpacing: 10
         ),
         itemBuilder: (context, index) {
-          return Container(color: Colors.red,);
+          final voiceModel = aiVoiceChanger[index];
+          return VoicesItem(voiceModel: voiceModel,);
         },
       ),
     );
