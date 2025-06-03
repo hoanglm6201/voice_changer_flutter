@@ -26,6 +26,8 @@ class ResImages {
   static const String bgBannerHome = '${_basePath}img_bg_banner_home.jpg';
   static const String bannerHome = '${_basePath}img_banner_home.png';
   static const String iconMicAI = '${_basePath}img_icon_mic_ai.png';
+  static const String iconRecordVideo = '${_basePath}record_video_img.png';
+  static const String iconResume = '${_basePath}resume.png';
 
   // Cartoon images
   static const String daffiDuck = '${_cartoonPath}Daffi Duck.jpg';
