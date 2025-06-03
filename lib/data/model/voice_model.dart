@@ -15,6 +15,53 @@ class VoiceModel {
 }
 
 List<VoiceModel> voiceList = [
+  // Celebrities and public figures voices
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Ariana Grande',
+    image: ResImages.arianaGrande,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Billie Eilish',
+    image: ResImages.billieEilish,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'cardi b',
+    image: ResImages.cardiB,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Drake',
+    image: ResImages.drake,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Keanu Reeves',
+    image: ResImages.keanuReeves,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Morgan Freeman',
+    image: ResImages.morganFreeman,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'snoop dogg',
+    image: ResImages.snoopDogg,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'Taylor Swift',
+    image: ResImages.taylorSwift,
+  ),
+  VoiceModel(
+    id: const Uuid().v4(),
+    name: 'The rock',
+    image: ResImages.theRock,
+  ),
+
   // Cartoon voices
   VoiceModel(
     id: const Uuid().v4(),
@@ -65,53 +112,6 @@ List<VoiceModel> voiceList = [
     id: const Uuid().v4(),
     name: 'Ton',
     image: ResImages.ton,
-  ),
-
-  // Celebrities and public figures voices
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Ariana Grande',
-    image: ResImages.arianaGrande,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Billie Eilish',
-    image: ResImages.billieEilish,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'cardi b',
-    image: ResImages.cardiB,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Drake',
-    image: ResImages.drake,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Keanu Reeves',
-    image: ResImages.keanuReeves,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Morgan Freeman',
-    image: ResImages.morganFreeman,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'snoop dogg',
-    image: ResImages.snoopDogg,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'Taylor Swift',
-    image: ResImages.taylorSwift,
-  ),
-  VoiceModel(
-    id: const Uuid().v4(),
-    name: 'The rock',
-    image: ResImages.theRock,
   ),
 
   // Game and pop culture icons voices

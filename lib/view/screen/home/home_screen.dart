@@ -6,6 +6,7 @@ import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/banner_home.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/header_welcome.dart';
+import 'package:voice_changer_flutter/view/screen/home/widget/hot_voice.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/option_list.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
@@ -55,6 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
             OptionList(),
             ResSpacing.h28,
             BannerHome(),
+            ResSpacing.h24,
+            HotVoice(),
+            SizedBox(height: kBottomNavigationBarHeight,)
           ],
         ),
       ),
