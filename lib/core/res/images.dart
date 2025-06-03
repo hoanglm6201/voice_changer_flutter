@@ -3,6 +3,10 @@ class ResImages {
 
   static const String _basePath = 'assets/images/';
 
+  static const String _cartoonPath = 'assets/cartoon/';
+  static const String _celebritiesPath = 'assets/celebrities_and_public_figures/';
+  static const String _gameIconsPath = 'assets/game_and_pop_culture_icons/';
+
   static const String appIcon = '${_basePath}img_app_icon.png';
   static const String appName = '${_basePath}img_app_name.png';
   static const String bannerPlayer = '${_basePath}img_banner_player.png';
@@ -22,4 +26,33 @@ class ResImages {
   static const String bgBannerHome = '${_basePath}img_bg_banner_home.jpg';
   static const String bannerHome = '${_basePath}img_banner_home.png';
   static const String iconMicAI = '${_basePath}img_icon_mic_ai.png';
+
+  // Cartoon images
+  static const String daffiDuck = '${_cartoonPath}Daffi Duck.jpg';
+  static const String dorthVader = '${_cartoonPath}Dorth Vader.jpg';
+  static const String elza = '${_cartoonPath}Elza.jpg';
+  static const String hamerSimpson = '${_cartoonPath}Hamer Simpson.jpg';
+  static const String haroyPotter = '${_cartoonPath}Haroy Potter.jpg';
+  static const String micketMouse = '${_cartoonPath}Micket Mouse.jpg';
+  static const String peppaPug = '${_cartoonPath}Peppa pug.jpg';
+  static const String scoobyDop = '${_cartoonPath}Scooby Dop.jpg';
+  static const String shark = '${_cartoonPath}Shark.jpg';
+  static const String ton = '${_cartoonPath}Ton.jpg';
+
+  // Celebrities and public figures
+  static const String arianaGrande = '${_celebritiesPath}Ariana Grande.jpg';
+  static const String billieEilish = '${_celebritiesPath}Billie Eilish.jpg';
+  static const String cardiB = '${_celebritiesPath}cardi b.jpg';
+  static const String drake = '${_celebritiesPath}Drake.jpg';
+  static const String keanuReeves = '${_celebritiesPath}Keanu Reeves.jpg';
+  static const String morganFreeman = '${_celebritiesPath}Morgan_Freeman.jpg';
+  static const String snoopDogg = '${_celebritiesPath}snoop dogg.jpg';
+  static const String taylorSwift = '${_celebritiesPath}Taylor_Swift.jpg';
+  static const String theRock = '${_celebritiesPath}The rock.jpg';
+
+  // Game and pop culture icons
+  static const String krotos = '${_gameIconsPath}Krotos.jpg';
+  static const String lataCroft = '${_gameIconsPath}lata_croft.jpg';
+  static const String luegi = '${_gameIconsPath}Luegi.jpg';
+  static const String mazio = '${_gameIconsPath}Mazio.jpg';
 }

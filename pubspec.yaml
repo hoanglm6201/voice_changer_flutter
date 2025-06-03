@@ -29,6 +29,7 @@ dependencies:
   permission_handler: ^11.3.1
   base_ui_flutter_v1:
     path: ../base_ui_flutter_v1
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +44,9 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/cartoon/
+    - assets/celebrities_and_public_figures/
+    - assets/game_and_pop_culture_icons/
 
   fonts:
     - family: SFCompactDisplay
