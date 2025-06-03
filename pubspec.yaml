@@ -65,3 +65,12 @@ flutter:
           weight: 100
         - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Ultralight.otf
           weight: 200
+
+    - family: Belanosima
+      fonts:
+        - asset: assets/fonts/belanosima/Belanosima-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/belanosima/Belanosima-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/belanosima/Belanosima-Bold.ttf
+          weight: 700

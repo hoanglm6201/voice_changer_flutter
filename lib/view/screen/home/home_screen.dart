@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:voice_changer_flutter/core/extensions/effect_extension.dart';
-import 'package:voice_changer_flutter/core/utils/effect_list.dart';
-import 'package:voice_changer_flutter/data/model/effect.dart';
-import 'package:voice_changer_flutter/service/audio_effect_service.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:voice_changer_flutter/core/res/font.dart';
+import 'package:voice_changer_flutter/core/res/icons.dart';
+import 'package:voice_changer_flutter/core/res/spacing.dart';
+import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/view/screen/home/widget/banner_home.dart';
+import 'package:voice_changer_flutter/view/screen/home/widget/header_welcome.dart';
+import 'package:voice_changer_flutter/view/screen/home/widget/option_list.dart';
+import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
+import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,95 +18,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
-  void applyEffect(Effect effect) {
-    AudioEffectService.playAudioWithEffect({
-      "pitch": effect.pitch,
-      "speed": effect.speed,
-      "newReverb": effect.newReverb?.stringValue,
-      "amplify": effect.amplify,
-      "newEcho": effect.newEcho,
-      "distort": effect.distort,
-      "distortType": effect.distortType?.stringValue,
-      "filter": effect.filter?.stringValue,
-      "eq1": effect.eq1,
-      "eq2": effect.eq2,
-      "eq3": effect.eq3,
-    });
-  }
-
-  void stopAudio() {
-    AudioEffectService.stopAudio();
-  }
-
-  void processVideo() {
-    AudioEffectService.processVideo();
-  }
-
-  void onIndexChanged(int value){
-    setState(() {
-      _currentIndex = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-      ),
-      body: Container(
-        color: Colors.grey,
-        child: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(listEffects()[_currentIndex].name, style: TextStyle(color: Colors.blue, fontSize: 24),),
-                  TextButton(
-                      onPressed: (){
-                        stopAudio();
-                      },
-                      child: Text('Stop Audio', style: TextStyle(color: Colors.red, fontSize: 24),)
-                  ),
-                ],
-              ),
-              TextButton(
-                  onPressed: (){
-                    processVideo();
-                  },
-                  child: Text('Process Audio', style: TextStyle(color: Colors.red, fontSize: 24),)
-              ),
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.only(bottom: 100),
-                  shrinkWrap: true,
-                  itemCount: listEffects().length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: (){
-                        applyEffect(listEffects()[index]);
-                        onIndexChanged(index);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          border: Border.all(color: Colors.white)
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(listEffects()[index].name, style: TextStyle(fontSize: 18),),
-                      ),
-                    );
-                  },
-                ),
-              )
-
-            ],
+      appBar: AppBarCustom(
+        leading: IconButtonCustom(
+          icon: SvgPicture.asset(ResIcon.icUpload),
+          onPressed: () {},
+          style: const IconButtonCustomStyle(
+            backgroundColor: Colors.white,
+            iconColor: Colors.white,
+            borderRadius: 15,
+            padding: EdgeInsets.all(11.0),
           ),
+        ),
+        actions: [
+          IconButtonCustom(
+            icon: SvgPicture.asset(ResIcon.icSetting),
+            onPressed: () {},
+            style: const IconButtonCustomStyle(
+              backgroundColor: Colors.white,
+              iconColor: Colors.white,
+              borderRadius: 15,
+              padding: EdgeInsets.all(11.0),
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ResSpacing.h24,
+            HeaderWelcome(),
+            ResSpacing.h24,
+            OptionList(),
+            ResSpacing.h28,
+            BannerHome(),
+          ],
         ),
       ),
     );

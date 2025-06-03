@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class IconButtonCustomStyle {
   final Color? backgroundColor;
   final Color? iconColor;
-  final double? iconSize;
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
 
   const IconButtonCustomStyle({
     this.backgroundColor,
     this.iconColor,
-    this.iconSize,
     this.borderRadius,
     this.padding,
   });

@@ -9,6 +9,7 @@ import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
 import 'package:voice_changer_flutter/view/screen/language/language_screen.dart';
+import 'package:voice_changer_flutter/view/screen/main_view.dart';
 import 'package:voice_changer_flutter/view/widgets/progress_bar/gradient_progress_bar.dart';
 import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 
@@ -57,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     if (isFirstOpenApp) {
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const LanguageScreen(isFromSetting: false,)));
     } else {
-      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const HomeScreen()));
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const MainView()));
     // Provider.of<AppSettingsProvider>(context, listen: false).increaseTimeOpenApp();
     }
   }

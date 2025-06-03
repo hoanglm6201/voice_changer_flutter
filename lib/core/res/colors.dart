@@ -17,5 +17,5 @@ class ResColors {
   static const Color colorGray = Color(0xFFB6BDC5);
   static const Color softPurple = Color(0xFFB070F5);
   static const Color darkBlueBlack = Color(0xFF071822);
-  static const Color pastelViolet = Color(0xFF9373FE);
+  static const Color colorPurple = Color(0xFF9373FE);
 }

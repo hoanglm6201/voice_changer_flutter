@@ -3,7 +3,6 @@ class ResImages {
 
   static const String _basePath = 'assets/images/';
 
-  // Thêm các file PNG
   static const String appIcon = '${_basePath}img_app_icon.png';
   static const String appName = '${_basePath}img_app_name.png';
   static const String bannerPlayer = '${_basePath}img_banner_player.png';
@@ -18,4 +17,9 @@ class ResImages {
   static const String prankSound = '${_basePath}img_prank_sound.png';
   static const String textToAudio = '${_basePath}img_text_to_audio.png';
   static const String voiceChange = '${_basePath}img_voice_change.png';
+  static const String bgGradient = '${_basePath}img_bg_gradient.jpg';
+  static const String bgBottomNav = '${_basePath}img_bg_bottom_nav.png';
+  static const String bgBannerHome = '${_basePath}img_bg_banner_home.jpg';
+  static const String bannerHome = '${_basePath}img_banner_home.png';
+  static const String iconMicAI = '${_basePath}img_icon_mic_ai.png';
 }

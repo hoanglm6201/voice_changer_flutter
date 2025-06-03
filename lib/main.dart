@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
@@ -19,6 +20,8 @@ void main() async {
 
   final purchaseProvider = PurchaseProvider();
   final adsProvider = AdsProvider();
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
   runApp(
     MultiProvider(providers: [
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: ResFont.sfCompactDisplay,
           brightness: Brightness.light,
+
           scaffoldBackgroundColor: Color(0xFFF3F4F8),
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.transparent,

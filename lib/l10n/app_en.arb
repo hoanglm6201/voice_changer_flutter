@@ -12,5 +12,15 @@
   "title_onboarding_3": "Famous Voices",
   "sub_title_onboarding_3": "Effortlessly use celebrity voice presets to sound like your favorite stars",
   "title_onboarding_4": "Funny Reels",
-  "sub_title_onboarding_4": "Discover various hilarious prank reels using realistic voice filters!"
+  "sub_title_onboarding_4": "Discover various hilarious prank reels using realistic voice filters!",
+  "home": "Home",
+  "library": "Library",
+  "welcome_to": "Welcome to",
+  "voice_changer": "Voice Changer",
+  "text_to_audio": "Text → Audio",
+  "prank_sound": "Prank Sound",
+  "prankReels": "Prank Reels",
+  "pdf_to_audio": "PDF → Audio",
+  "sub_banner_home": "Experience the magic of changing your voice with AI!",
+  "let_go": "Let's Go"
 }

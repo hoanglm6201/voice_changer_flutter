@@ -10,6 +10,7 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/service_locator/service_locator.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
+import 'package:voice_changer_flutter/view/screen/main_view.dart';
 import 'package:voice_changer_flutter/view/widgets/text/text_gradient.dart';
 import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 
@@ -43,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Navigator.pushReplacement(
               context,
               CupertinoPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const MainView(),
               ),
             );
           } else {
