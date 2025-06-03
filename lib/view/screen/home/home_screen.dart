@@ -24,30 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCustom(
-        leading: IconButtonCustom(
-          icon: SvgPicture.asset(ResIcon.icUpload),
-          onPressed: () {},
-          style: const IconButtonCustomStyle(
-            backgroundColor: Colors.white,
-            iconColor: Colors.white,
-            borderRadius: 15,
-            padding: EdgeInsets.all(11.0),
-          ),
-        ),
-        actions: [
-          IconButtonCustom(
-            icon: SvgPicture.asset(ResIcon.icSetting),
-            onPressed: () {},
-            style: const IconButtonCustomStyle(
-              backgroundColor: Colors.white,
-              iconColor: Colors.white,
-              borderRadius: 15,
-              padding: EdgeInsets.all(11.0),
-            ),
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
