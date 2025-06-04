@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
@@ -7,6 +8,7 @@ import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 
 class HotVoice extends StatelessWidget {
   const HotVoice({super.key});
@@ -43,13 +45,18 @@ class HotVoice extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                context.locale.see_more,
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: ResColors.textColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoiceListScreen(),));
+                },
+                child: Text(
+                  context.locale.see_more,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: ResColors.textColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ],

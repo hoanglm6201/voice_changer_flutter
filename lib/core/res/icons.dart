@@ -20,8 +20,11 @@ class ResIcon {
   static const String icUpload = '${_basePath}ic_upload.svg';
   static const String icCheck = '${_basePath}ic_check.svg';
   static const String icMic = '${_basePath}ic_mic.svg';
+  static const String icRecordsMic = '${_basePath}ic_records_micro.svg';
   static const String icFire = '${_basePath}ic_fire.svg';
   static const String icBack = '${_basePath}ic_back.svg';
+  static const String icRotateCamera = '${_basePath}ic_rotate_camera.svg';
+  static const String icPause = '${_basePath}ic_pause.svg';
   static const String icAvatarLib = '${_basePath}ic_avatar_lib.svg';
   static const String icShare = '${_basePath}ic_share.svg';
   static const String icDelete = '${_basePath}ic_delete.svg';

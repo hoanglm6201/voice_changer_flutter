@@ -5,7 +5,7 @@ import 'package:voice_changer_flutter/core/res/font.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
-import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_changer_screen.dart';
+import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/banner_home.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/header_welcome.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/hot_voice.dart';
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ResSpacing.h28,
             BannerHome(
               onTap: () {
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoiceChangerScreen()));
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoiceListScreen()));
               },
             ),
             ResSpacing.h24,
