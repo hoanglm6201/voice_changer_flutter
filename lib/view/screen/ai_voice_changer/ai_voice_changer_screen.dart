@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:voice_changer_flutter/core/enum/record_mode.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
@@ -20,6 +21,8 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   bool isRecording = false;
   bool isPausing = false;
   int _timer = 0;
+  RecordMode recordMode = RecordMode.video;
+
 
 
   void setRecordingState(){
@@ -36,8 +39,18 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       isPausing = !isPausing;
     });
   }
+  void setRecordMode() {
+    setState(() {
+      recordMode = (recordMode == RecordMode.video)
+          ? RecordMode.audio
+          : RecordMode.video;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBarCustom(
         title: isRecording ? _buildTimeUI(_timer) : Text(context.locale.ai_voice_changer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
@@ -81,7 +94,8 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
               ],
             ),
-            Align(
+            if(isPausing)
+              Align(
               alignment: Alignment.topCenter,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
@@ -99,6 +113,8 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   }
 
   Widget _buildBottomButtons(BuildContext context){
+    bool isAudioRecord = recordMode == RecordMode.audio;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -111,22 +127,29 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
                 setPausingState();
               },
               child: isPausing ? Image.asset(ResImages.iconResume) : SvgPicture.asset(ResIcon.icPause))
-            : Column(
-            spacing: 4,
-            children: [
-              IconButtonCustom(
-                icon: SvgPicture.asset(ResIcon.icRecordsMic, height: 30,),
-                style: const IconButtonCustomStyle(
-                  backgroundColor: Colors.white,
-                  iconColor: Colors.white,
-                  borderRadius: 15,
-                  padding: EdgeInsets.all(11.0),
+            :
+          /// CHUYỂN QUA AUDIO RECORD MODE
+            GestureDetector(
+              onTap: () {
+                setRecordMode();
+              },
+              child: Column(
+              spacing: 4,
+              children: [
+                IconButtonCustom(
+                  icon: SvgPicture.asset(isAudioRecord ? ResIcon.icRecordsMic : ResIcon.icRecordsVideo, height: 30,),
+                  style: const IconButtonCustomStyle(
+                    backgroundColor: Colors.white,
+                    iconColor: Colors.white,
+                    borderRadius: 15,
+                    padding: EdgeInsets.all(11.0),
+                  ),
                 ),
+                Text(context.locale.audio_record,maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12),)
+                ],
               ),
-              Text(context.locale.audio_record,maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12),)
-            ],
+            ),
           ),
-        ),
         /// BUTTON RECORD
         GestureDetector(
           onTap: () {
@@ -147,7 +170,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
                 });
                 print(_timer);
               },
-            ) : Image.asset(ResImages.iconRecordVideo, fit: BoxFit.cover,)
+            ) : Image.asset(isAudioRecord ? ResImages.iconRecordAudio: ResImages.iconRecordVideo, fit: BoxFit.cover,)
           )
         ),
         /// BUTTON IMAGE VOICE LIST

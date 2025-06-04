@@ -31,6 +31,7 @@ dependencies:
     path: ../base_ui_flutter_v1
   uuid: ^4.5.1
   camera: ^0.11.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

@@ -10,6 +10,35 @@ import UIKit
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
       let controller = window?.rootViewController as! FlutterViewController
+     
+      let videoChannel = FlutterMethodChannel(name: "video_merger",
+                                                  binaryMessenger: controller.binaryMessenger)
+        
+        videoChannel.setMethodCallHandler({
+          (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+            
+          if call.method == "mergeVideos" {
+            guard let args = call.arguments as? [String: Any],
+                  let paths = args["paths"] as? [String],
+                  let outputPath = args["outputPath"] as? String else {
+              result(FlutterError(code: "BAD_ARGS", message: "Wrong args", details: nil))
+              return
+            }
+
+            VideoMerger.mergeVideos(videoPaths: paths, outputPath: outputPath) { success, output in
+              if success {
+                result(output)
+              } else {
+                result(FlutterError(code: "MERGE_FAILED", message: output ?? "Unknown error", details: nil))
+              }
+            }
+          } else {
+            result(FlutterMethodNotImplemented)
+          }
+        })
+      
+      
+    
               let audioChannel = FlutterMethodChannel(name: "audio_effects",
                                                      binaryMessenger: controller.binaryMessenger)
               
