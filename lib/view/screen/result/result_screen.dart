@@ -10,15 +10,15 @@ import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
-import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_video.dart';
-import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_voice.dart';
+import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
+import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 
-class LibraryDetailScreen extends StatelessWidget {
+class ResultScreen extends StatelessWidget {
   final bool isVideo;
-  const LibraryDetailScreen({super.key, required this.isVideo});
+  const ResultScreen({super.key, required this.isVideo});
 
   @override
   Widget build(BuildContext context) {
