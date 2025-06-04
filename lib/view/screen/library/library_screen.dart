@@ -6,7 +6,7 @@ import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/header_welcome.dart';
 import 'package:voice_changer_flutter/view/screen/library/widget/library_item.dart';
-import 'package:voice_changer_flutter/view/screen/library_detail/library_detail_screen.dart';
+import 'package:voice_changer_flutter/view/screen/result/result_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/container/gradient_box_border.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => LibraryDetailScreen(isVideo: false,),
+                      builder: (context) => ResultScreen(isVideo: true,),
                     ),
                   );
                 },

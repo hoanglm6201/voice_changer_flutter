@@ -33,6 +33,7 @@
   "welcome_to": "Welcome to",
   "voice_changer": "Voice Changer",
   "text_to_audio": "Text → Audio",
+  "text_to_audio_2": "Text to Audio",
   "prank_sound": "Prank Sound",
   "prankReels": "Prank Reels",
   "pdf_to_audio": "PDF → Audio",
@@ -44,5 +45,6 @@
   "share": "Share",
   "delete": "Delete",
   "sub_delete": "You will not be able to undo this action.",
-  "keep_it": "Keep it"
+  "keep_it": "Keep it",
+  "continuee": "Continue"
 }
