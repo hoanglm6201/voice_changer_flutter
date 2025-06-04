@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
+import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/gradient_button.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
+import 'package:voice_changer_flutter/view/widgets/selector/language_selector.dart';
 
 class TextToAudioScreen extends StatefulWidget {
   const TextToAudioScreen({super.key});
@@ -28,7 +30,11 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
         title: Text(context.locale.text_to_audio_2),
       ),
       body: Column(
-
+        children: [
+          LanguageSelector(),
+          ResSpacing.h12,
+          LanguageSelector(),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: GradientButton(

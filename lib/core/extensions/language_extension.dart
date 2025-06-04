@@ -22,8 +22,6 @@ extension LanguageExtension on LanguageEnum {
         return 'Hindi';
       case LanguageEnum.ru:
         return 'Russian';
-      default:
-        return context.locale.unknown;
     }
   }
 
@@ -45,8 +43,41 @@ extension LanguageExtension on LanguageEnum {
         return ResIcon.hindi;
       case LanguageEnum.ru:
         return ResIcon.russia;
-      default:
-        return ResIcon.unitedStates;
+    }
+  }
+
+  String get code {
+    return name;
+  }
+
+  Locale toLocale() {
+    return Locale(code);
+  }
+}
+
+extension LanguageSelectExtension on LanguageSelect {
+  String get displayName {
+    switch (this) {
+      case LanguageSelect.en:
+        return 'English';
+      case LanguageSelect.es:
+        return 'Spanish';
+      case LanguageSelect.ar:
+        return 'Arabic';
+      case LanguageSelect.id:
+        return 'Indonesian';
+      case LanguageSelect.pt:
+        return 'Portuguese';
+      case LanguageSelect.fr:
+        return 'French';
+      case LanguageSelect.ru:
+        return 'Russian';
+      case LanguageSelect.tr:
+        return 'Turkish';
+      case LanguageSelect.th:
+        return 'Thai';
+      case LanguageSelect.vi:
+        return 'Vietnamese';
     }
   }
 

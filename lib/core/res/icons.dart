@@ -31,4 +31,5 @@ class ResIcon {
   static const String icDelete = '${_basePath}ic_delete.svg';
   static const String icPlayCircle = '${_basePath}ic_play_circle.svg';
   static const String icCamera = '${_basePath}ic_camera.svg';
+  static const String icArrowRight = '${_basePath}ic_arrow_right.svg';
 }
