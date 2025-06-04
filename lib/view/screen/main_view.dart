@@ -46,7 +46,6 @@ class _MainViewState extends State<MainView> {
           onPressed: () {},
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
-            iconColor: Colors.white,
             borderRadius: 15,
             padding: EdgeInsets.all(11.0),
           ),
@@ -57,7 +56,6 @@ class _MainViewState extends State<MainView> {
             onPressed: () {},
             style: const IconButtonCustomStyle(
               backgroundColor: Colors.white,
-              iconColor: Colors.white,
               borderRadius: 15,
               padding: EdgeInsets.all(11.0),
             ),

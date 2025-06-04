@@ -8,6 +8,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   final double elevation;
   final bool centerTitle;
   final TextStyle? titleTextStyle;
+  final double actionsSpacing;
 
   const AppBarCustom({
     super.key,
@@ -18,6 +19,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
     this.elevation = 4.0,
     this.centerTitle = true,
     this.titleTextStyle,
+    this.actionsSpacing = 8.0,
   });
 
   @override
@@ -29,7 +31,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
       top: true,
       bottom: false,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         height: kToolbarHeight,
         child: Stack(
           children: [
@@ -45,6 +47,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Row(
+                  spacing: actionsSpacing,
                   mainAxisSize: MainAxisSize.min,
                   children: actions!,
                 ),

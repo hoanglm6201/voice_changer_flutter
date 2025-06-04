@@ -23,4 +23,6 @@ class ResIcon {
   static const String icFire = '${_basePath}ic_fire.svg';
   static const String icBack = '${_basePath}ic_back.svg';
   static const String icAvatarLib = '${_basePath}ic_avatar_lib.svg';
+  static const String icShare = '${_basePath}ic_share.svg';
+  static const String icDelete = '${_basePath}ic_delete.svg';
 }

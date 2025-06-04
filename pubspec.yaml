@@ -30,6 +30,8 @@ dependencies:
   base_ui_flutter_v1:
     path: ../base_ui_flutter_v1
   uuid: ^4.5.1
+  blur: ^4.0.2
+  video_player: ^2.10.0
 
 dev_dependencies:
   flutter_test:
