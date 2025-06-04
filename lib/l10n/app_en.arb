@@ -31,5 +31,7 @@
   "see_more": "See More >>",
   "ai_voices" : "AI Voices",
   "share": "Share",
-  "delete": "Delete"
+  "delete": "Delete",
+  "sub_delete": "You will not be able to undo this action.",
+  "keep_it": "Keep it"
 }

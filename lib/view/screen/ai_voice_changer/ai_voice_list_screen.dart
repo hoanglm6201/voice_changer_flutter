@@ -24,7 +24,6 @@ class AiVoiceListScreen extends StatelessWidget {
           },
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
-            iconColor: Colors.white,
             borderRadius: 15,
             padding: EdgeInsets.all(11.0),
           ),

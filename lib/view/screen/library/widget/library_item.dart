@@ -3,10 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:uuid/uuid.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
+import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 
 class LibraryItem extends StatelessWidget {
-  const LibraryItem({super.key});
+   const LibraryItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +99,16 @@ class LibraryItem extends StatelessWidget {
                 ),
               ),
               PopupMenuItem<String>(
+                onTap: () {
+                  final ConfirmDialog confirmDialog = ConfirmDialog(
+                    imageHeader: ResImages.deleteHeader,
+                    title: context.locale.delete,
+                    content: context.locale.sub_delete,
+                    textCancel: context.locale.keep_it,
+                    textAccept: context.locale.delete,
+                  );
+                  confirmDialog.show(context);
+                },
                 height: 32,
                 padding: EdgeInsets.zero,
                 value: 'delete',

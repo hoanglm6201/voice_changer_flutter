@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class IconButtonCustomStyle {
   final Color? backgroundColor;
-  final Color? iconColor;
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
 
   const IconButtonCustomStyle({
     this.backgroundColor,
-    this.iconColor,
     this.borderRadius,
     this.padding,
   });
@@ -32,7 +30,7 @@ class IconButtonCustom extends StatelessWidget {
           color: style?.backgroundColor ?? Colors.white,
           borderRadius: BorderRadius.circular(style?.borderRadius ?? 15),
         ),
-        padding: style?.padding ?? const EdgeInsets.all(6.0),
+        padding: style?.padding ?? const EdgeInsets.all(11.0),
         child: icon,
       ),
     );

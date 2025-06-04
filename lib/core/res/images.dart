@@ -30,6 +30,7 @@ class ResImages {
   static const String iconRecordAudio = '${_basePath}record_audio_img.png';
   static const String iconResume = '${_basePath}resume.png';
   static const String iconMicStar = '${_basePath}img_icon_mic_star.png';
+  static const String deleteHeader = '${_basePath}img_delete_header.png';
 
   // Cartoon images
   static const String daffiDuck = '${_cartoonPath}Daffi Duck.jpg';
