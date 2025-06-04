@@ -4,6 +4,7 @@ class ResSpacing {
   ResSpacing._();
 
   static const h4 = SizedBox(height: 4);
+  static const h6 = SizedBox(height: 6);
   static const h8 = SizedBox(height: 8);
   static const h10 = SizedBox(height: 10);
   static const h12 = SizedBox(height: 12);

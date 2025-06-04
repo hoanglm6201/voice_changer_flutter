@@ -28,7 +28,6 @@ class _LibraryScreenState extends State<LibraryScreen>
 
   @override
   Widget build(BuildContext context) {
-    final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return Column(
       spacing: 24,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +73,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => LibraryDetailScreen(isVideo: false,),
+                      builder: (context) => LibraryDetailScreen(isVideo: true,),
                     ),
                   );
                 },

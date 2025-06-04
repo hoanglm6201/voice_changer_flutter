@@ -52,6 +52,7 @@ flutter:
     - assets/anim/
     - assets/celebrities_and_public_figures/
     - assets/game_and_pop_culture_icons/
+    - assets/video_test.MOV
 
   fonts:
     - family: SFCompactDisplay
