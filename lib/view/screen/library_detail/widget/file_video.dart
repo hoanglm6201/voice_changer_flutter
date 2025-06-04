@@ -27,7 +27,7 @@ class _FileVideoState extends State<FileVideo> {
   }
 
   void _initializeVideo() {
-    _controller = VideoPlayerController.asset("assets/video_test.MOV")
+    _controller = VideoPlayerController.asset("assets/video_test.mp4")
       ..initialize().then((_) {
         if (mounted) {
           _controller.setLooping(true);
