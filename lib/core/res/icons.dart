@@ -28,4 +28,6 @@ class ResIcon {
   static const String icAvatarLib = '${_basePath}ic_avatar_lib.svg';
   static const String icShare = '${_basePath}ic_share.svg';
   static const String icDelete = '${_basePath}ic_delete.svg';
+  static const String icPlayCircle = '${_basePath}ic_play_circle.svg';
+  static const String icCamera = '${_basePath}ic_camera.svg';
 }

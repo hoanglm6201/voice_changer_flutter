@@ -155,7 +155,7 @@ class ConfirmDialog extends DialogBase {
                           ),
                         ),
                         onTap: () {
-                          onAccept();
+                          onCancel();
                         },
                       ),
                     ),

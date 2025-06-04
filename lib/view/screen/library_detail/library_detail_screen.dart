@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
+import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_video.dart';
+import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_voice.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 
 class LibraryDetailScreen extends StatelessWidget {
   final bool isVideo;
@@ -29,7 +33,16 @@ class LibraryDetailScreen extends StatelessWidget {
         actions: [
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icDelete),
-            onPressed: () {},
+            onPressed: () {
+              final ConfirmDialog confirmDialog = ConfirmDialog(
+                imageHeader: ResImages.deleteHeader,
+                title: context.locale.delete,
+                content: context.locale.sub_delete,
+                textCancel: context.locale.keep_it,
+                textAccept: context.locale.delete,
+              );
+              confirmDialog.show(context);
+            },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
           IconButtonCustom(
@@ -42,7 +55,7 @@ class LibraryDetailScreen extends StatelessWidget {
       body: Column(
         children: [
           ResSpacing.h14,
-          Expanded(child: Placeholder(),),
+          Expanded(child: isVideo ? FileVideo() : FileVoice(),),
           ResSpacing.h14,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
