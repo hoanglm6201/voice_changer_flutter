@@ -89,7 +89,7 @@ class _FileVideoState extends State<FileVideo> {
             children: [
               FittedBox(
                 fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: SizedBox(
                   width: _controller.value.size.width,
                   height: _controller.value.size.height,
