@@ -49,8 +49,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBarCustom(
         title: isRecording ? _buildTimeUI(_timer) : Text(context.locale.ai_voice_changer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
@@ -59,7 +57,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           onPressed: () {Navigator.pop(context);},
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
-            iconColor: Colors.white,
             borderRadius: 15,
             padding: EdgeInsets.all(11.0),
           ),
@@ -70,7 +67,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
             onPressed: () {},
             style: const IconButtonCustomStyle(
               backgroundColor: Colors.white,
-              iconColor: Colors.white,
               borderRadius: 15,
               padding: EdgeInsets.all(11.0),
             ),
@@ -140,7 +136,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
                   icon: SvgPicture.asset(isAudioRecord ? ResIcon.icRecordsMic : ResIcon.icRecordsVideo, height: 30,),
                   style: const IconButtonCustomStyle(
                     backgroundColor: Colors.white,
-                    iconColor: Colors.white,
                     borderRadius: 15,
                     padding: EdgeInsets.all(11.0),
                   ),
