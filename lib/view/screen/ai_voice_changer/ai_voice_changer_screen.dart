@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/core/enum/record_mode.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
@@ -13,6 +14,7 @@ import 'package:voice_changer_flutter/view/screen/ai_voice_preview/ai_voice_prev
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
+import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
   final VoiceModel voiceModel;
@@ -27,7 +29,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   bool isPausing = false;
   int _timer = 0;
   RecordMode recordMode = RecordMode.video;
-
 
 
   void setRecordingState(){
@@ -50,6 +51,9 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     setState(() {
       isPausing = !isPausing;
     });
+  }
+  void startRecord(){
+    context.read<AudioRecorderProvider>().startRecording();
   }
   void onRecordEnd(){
     bool isAudioRecord = recordMode == RecordMode.audio;

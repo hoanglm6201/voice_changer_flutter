@@ -13,10 +13,18 @@ import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart'
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
-class AiVoicePreviewScreen extends StatelessWidget {
+class AiVoicePreviewScreen extends StatefulWidget {
   final VoiceModel voiceModel;
   final bool isAudio;
   const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio});
+
+  @override
+  State<AiVoicePreviewScreen> createState() => _AiVoicePreviewScreenState();
+}
+
+class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
+  final GlobalKey<FileVideoState> _videoKey = GlobalKey<FileVideoState>();
+  final GlobalKey<FileVoiceState> _voiceKey = GlobalKey<FileVoiceState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,7 @@ class AiVoicePreviewScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Expanded(child: isAudio ? FileVoice() : FileVideo()),
+            Expanded(child: widget.isAudio ? FileVoice(key: _voiceKey,) : FileVideo(key: _videoKey)),
             SizedBox(height: 40),
             _buildButtons(context),
             SizedBox(height: 20),
@@ -94,8 +102,14 @@ class AiVoicePreviewScreen extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: voiceModel,)));
+              onTap: () async {
+                if (!widget.isAudio) {
+                  _videoKey.currentState?.pauseVideo();
+                }else{
+                  _voiceKey.currentState?.pauseAudio();
+                }
+                await Future.delayed(Duration(milliseconds: 200));
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: widget.voiceModel, isAudio: widget.isAudio,)));
               },
               child: Container(
                 width: double.infinity,
@@ -127,6 +141,7 @@ class AiVoicePreviewScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildSeeMoreList(BuildContext context){
     final width = MediaQuery.of(context).size.width - 50;
     final paddingBottom = MediaQuery.of(context).padding.bottom;
