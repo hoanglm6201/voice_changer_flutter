@@ -1,17 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:voice_changer_flutter/core/enum/record_mode.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/camera_view.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/recording_widget.dart';
+import 'package:voice_changer_flutter/view/screen/ai_voice_preview/ai_voice_preview_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
-  final String voiceSelectedImage;
-  const AiVoiceChangerScreen({super.key, required this.voiceSelectedImage});
+  final VoiceModel voiceModel;
+  const AiVoiceChangerScreen({super.key, required this.voiceModel});
 
   @override
   State<AiVoiceChangerScreen> createState() => _AiVoiceChangerScreenState();
@@ -26,6 +31,10 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
 
   void setRecordingState(){
+    if(_timer <=2 && isRecording){
+      _showSnackBar();
+      return;
+    }
     setState(() {
       isRecording = !isRecording;
       _timer = 0;
@@ -33,11 +42,17 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     if(isPausing){
       setPausingState();
     }
+    if(!isRecording){
+      onRecordEnd();
+    }
   }
   void setPausingState(){
     setState(() {
       isPausing = !isPausing;
     });
+  }
+  void onRecordEnd(){
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoicePreviewScreen(voiceModel: widget.voiceModel,),));
   }
   void setRecordMode() {
     setState(() {
@@ -49,12 +64,30 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isAudioRecord = recordMode == RecordMode.audio;
     return Scaffold(
       appBar: AppBarCustom(
         title: isRecording ? _buildTimeUI(_timer) : Text(context.locale.ai_voice_changer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icBack),
-          onPressed: () {Navigator.pop(context);},
+          onPressed: () {
+            print('asda');
+            if(isRecording){
+              final ConfirmDialog confirmDialog = ConfirmDialog(
+                imageHeader: ResImages.iconDiscard,
+                title: context.locale.discard,
+                content: context.locale.discard_des,
+                textCancel: context.locale.stay_here,
+                textAccept: context.locale.leave,
+                onCancelPress: () {
+                  Navigator.pop(context);
+                },
+              );
+              confirmDialog.show(context);
+              return;
+            }
+            Navigator.pop(context);
+            },
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
             borderRadius: 15,
@@ -62,6 +95,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           ),
         ),
         actions: [
+          if(!isAudioRecord)
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icRotateCamera),
             onPressed: () {},
@@ -82,7 +116,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
-                    child: CameraView()
+                    child: isAudioRecord ? Lottie.asset('assets/anim/anim_audio.json') : CameraView()
                   )
                 ),
                 SizedBox(height: 10),
@@ -179,7 +213,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12)
                 ),
-                child: Image.asset(widget.voiceSelectedImage, height: 50,)),
+                child: Image.asset(widget.voiceModel.image, height: 50,)),
               Text(context.locale.voice_list, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12),)
             ],
           ),
@@ -210,6 +244,29 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           color: isPausing ? Colors.black: Colors.white,
           fontSize: 14,
         ),
+      ),
+    );
+  }
+  void _showSnackBar(){
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          context.locale.min_video_length_is_2_seconds,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black.withValues(alpha: 0.7),
+        elevation: 0,
+        padding: EdgeInsets.all(12),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 66),
+        duration: Duration(seconds: 1),
       ),
     );
   }

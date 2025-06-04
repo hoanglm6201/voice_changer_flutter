@@ -62,106 +62,114 @@ class ConfirmDialog extends DialogBase {
       builder: (context) {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 3.7, sigmaY: 3.7, tileMode: TileMode.mirror),
-          child: Dialog(
-            backgroundColor: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ResSpacing.h8,
-                if (imageHeader != null && imageHeader?.trim() != "")
-                  Image.asset(
-                    imageHeader!,
-                    width: 72,
-                    height: 72,
-                  ),
-                if (title != null)
-                  ...[
-                    Text(
-                      title ?? "",
-                      style: titleStyle ??
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Dialog(
+              backgroundColor: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ResSpacing.h16,
+                  if (imageHeader != null && imageHeader?.trim() != "")
+                    Image.asset(
+                      imageHeader!,
+                      width: 72,
+                      height: 72,
+                    ),
+                  ResSpacing.h8,
+                  if (title != null)
+                    ...[
+                      Text(
+                        title ?? "",
+                        style: titleStyle ??
+                            const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: ResColors.textColor,
+                            ),
+                      ),
+                      ResSpacing.h16,
+                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      content ?? "",
+                      textAlign: TextAlign.center,
+                      style: contentStyle ??
                           const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
                             color: ResColors.textColor,
                           ),
                     ),
-                    ResSpacing.h16,
-                  ],
-                Text(
-                  content ?? "",
-                  style: contentStyle ??
-                      const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        color: ResColors.textColor,
-                      ),
-                ),
-                ResSpacing.h20,
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                color: Color.fromRGBO(190, 183, 219, 0.5),
-                                width: 0.5,
+                  ),
+                  ResSpacing.h14,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: Color.fromRGBO(190, 183, 219, 0.5),
+                                  width: 0.5,
+                                ),
                               ),
                             ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            textAccept,
-                            style: acceptTextStyle ??
-                                const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.red,
-                                ),
-                          ),
-                        ),
-                        onTap: () {
-                          onAccept();
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                color: Color.fromRGBO(190, 183, 219, 0.5),
-                                width: 0.5,
-                              ),
-                              left: BorderSide(
-                                color: Color.fromRGBO(190, 183, 219, 0.5),
-                                width: 0.5,
-                              ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              textAccept,
+                              style: acceptTextStyle ??
+                                  const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.red,
+                                  ),
                             ),
                           ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            textCancel,
-                            style: cancelTextStyle ??
-                                const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: ResColors.textColor,
-                                ),
-                          ),
+                          onTap: () {
+                            onAccept();
+                          },
                         ),
-                        onTap: () {
-                          onAccept();
-                        },
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      Expanded(
+                        child: InkWell(
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: Color.fromRGBO(190, 183, 219, 0.5),
+                                  width: 0.5,
+                                ),
+                                left: BorderSide(
+                                  color: Color.fromRGBO(190, 183, 219, 0.5),
+                                  width: 0.5,
+                                ),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              textCancel,
+                              style: cancelTextStyle ??
+                                  const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: ResColors.textColor,
+                                  ),
+                            ),
+                          ),
+                          onTap: () {
+                            onCancel();
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         );
