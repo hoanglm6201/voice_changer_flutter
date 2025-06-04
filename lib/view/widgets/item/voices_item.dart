@@ -5,12 +5,16 @@ import 'package:voice_changer_flutter/data/model/voice_model.dart';
 
 class VoicesItem extends StatelessWidget {
   final VoiceModel voiceModel;
-  const VoicesItem({super.key, required this.voiceModel});
+  final double? width;
+  final double? height;
+  const VoicesItem({super.key, required this.voiceModel, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context).width;
     return Container(
+      height: height,
+      width: width,
       padding: EdgeInsets.only(bottom: 2, right: 2, left:  2),
       decoration: BoxDecoration(
         color: Colors.red,

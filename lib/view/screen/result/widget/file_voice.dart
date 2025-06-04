@@ -10,10 +10,10 @@ class FileVoice extends StatefulWidget {
   const FileVoice({super.key});
 
   @override
-  State<FileVoice> createState() => _FileVoiceState();
+  State<FileVoice> createState() => FileVoiceState();
 }
 
-class _FileVoiceState extends State<FileVoice> {
+class FileVoiceState extends State<FileVoice> {
   final player = AudioPlayer();
   bool _isPlaying = false;
   Duration _currentPosition = Duration.zero;
@@ -26,13 +26,17 @@ class _FileVoiceState extends State<FileVoice> {
     _loadAudio();
   }
 
+  void pauseAudio() async {
+    await player.pause();
+  }
+
   Future<void> _loadAudio() async {
     try {
       await player.setSource(AssetSource("audio_test.mp3"));
 
       // Lắng nghe thay đổi vị trí audio
       player.onPositionChanged.listen((duration) {
-        if (!_isSliderDragging) {
+        if (!_isSliderDragging && mounted) {
           setState(() {
             _currentPosition = duration;
           });
@@ -41,24 +45,30 @@ class _FileVoiceState extends State<FileVoice> {
 
       // Lắng nghe thay đổi trạng thái player
       player.onPlayerStateChanged.listen((state) {
+        if(mounted){
         setState(() {
           _isPlaying = state == PlayerState.playing;
         });
+        }
       });
 
       // Lắng nghe thời lượng total của audio
       player.onDurationChanged.listen((duration) {
-        setState(() {
-          _totalDuration = duration;
-        });
+        if(mounted) {
+          setState(() {
+            _totalDuration = duration;
+          });
+        }
       });
 
       // Lắng nghe khi audio kết thúc
       player.onPlayerComplete.listen((event) {
-        setState(() {
-          _isPlaying = false;
-          _currentPosition = Duration.zero;
-        });
+        if(mounted) {
+          setState(() {
+            _isPlaying = false;
+            _currentPosition = Duration.zero;
+          });
+        }
       });
 
     } catch (e) {
@@ -181,8 +191,12 @@ class _FileVoiceState extends State<FileVoice> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: _togglePlayPause,
-            child: SvgPicture.asset(
-                _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle
+            child: SizedBox(
+              height: 60,
+              width: 60,
+              child: SvgPicture.asset(
+                  _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle
+              ),
             ),
           ),
         ),

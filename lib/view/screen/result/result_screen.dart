@@ -15,10 +15,19 @@ import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart'
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/download_dialog.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
+  final bool? isFromProcessing;
   final bool isVideo;
-  const ResultScreen({super.key, required this.isVideo});
+  const ResultScreen({super.key, required this.isVideo, this.isFromProcessing = false});
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  bool _isDownloaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +42,7 @@ class ResultScreen extends StatelessWidget {
           icon: SvgPicture.asset(ResIcon.icBack),
         ),
         actions: [
+          if(widget.isFromProcessing == false)
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icDelete),
             onPressed: () {
@@ -47,17 +57,41 @@ class ResultScreen extends StatelessWidget {
             },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
+          if(widget.isFromProcessing == true)
+          IconButtonCustom(
+            icon: SvgPicture.asset(_isDownloaded ? ResIcon.icDownloadSuccess : ResIcon.icDownload),
+            onPressed: () async {
+              await showDialog(
+                barrierDismissible: false,
+                context: context, builder: (context) => Dialog(
+                  child: DownloadDialog(
+                    onDownloadSuccess: (bool isDownloadSuccess) {
+                      setState(() {
+                        _isDownloaded = isDownloadSuccess;
+                      });
+                  },)
+                ),
+              );
+            },
+            style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
+          ),
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icShare),
             onPressed: () {},
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
+          ),
+          if(widget.isFromProcessing == true)
+          IconButtonCustom(
+            icon: SvgPicture.asset(ResIcon.icHomeResult),
+            onPressed: () {},
+            style: IconButtonCustomStyle(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 11)),
           ),
         ],
       ),
       body: Column(
         children: [
           ResSpacing.h14,
-          Expanded(child: isVideo ? FileVideo() : FileVoice(),),
+          Expanded(child: widget.isVideo ? FileVideo() : FileVoice(),),
           ResSpacing.h14,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),

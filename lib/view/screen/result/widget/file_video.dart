@@ -8,10 +8,10 @@ class FileVideo extends StatefulWidget {
   const FileVideo({super.key});
 
   @override
-  State<FileVideo> createState() => _FileVideoState();
+  State<FileVideo> createState() => FileVideoState();
 }
 
-class _FileVideoState extends State<FileVideo> {
+class FileVideoState extends State<FileVideo> {
   late VideoPlayerController _controller;
   bool _isInitialized = false;
   bool _isPlaying = false;
@@ -25,9 +25,17 @@ class _FileVideoState extends State<FileVideo> {
       }
     });
   }
+  void pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+      setState(() {
+        _isPlaying = false;
+      });
+    }
+  }
 
   void _initializeVideo() {
-    _controller = VideoPlayerController.asset("assets/video_test.MP4")
+    _controller = VideoPlayerController.asset("assets/video_test.mp4")
       ..initialize().then((_) {
         if (mounted) {
           _controller.setLooping(true);

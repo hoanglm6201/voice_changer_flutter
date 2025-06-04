@@ -42,7 +42,7 @@ class AiVoiceListScreen extends StatelessWidget {
           final voiceModel = aiVoiceChanger[index];
           return GestureDetector(
             onTap: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoiceChangerScreen(voiceSelectedImage: voiceModel.image,)));
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoiceChangerScreen(voiceModel: voiceModel,)));
             },
             child: VoicesItem(
             voiceModel: voiceModel)
