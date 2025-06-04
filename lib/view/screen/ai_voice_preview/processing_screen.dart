@@ -1,17 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/view/screen/result/result_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/item/voices_item.dart';
 
-class ProcessingScreen extends StatelessWidget {
+class ProcessingScreen extends StatefulWidget {
   final VoiceModel voiceModel;
   const ProcessingScreen({super.key, required this.voiceModel});
 
+  @override
+  State<ProcessingScreen> createState() => _ProcessingScreenState();
+}
+
+class _ProcessingScreenState extends State<ProcessingScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 1), () {
+      if (mounted) {
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => ResultScreen(isVideo: false,),));
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context).width;
@@ -34,7 +51,7 @@ class ProcessingScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 30),
-          VoicesItem(voiceModel: voiceModel, height: screenSize * 0.35, width: screenSize * 0.26,),
+          VoicesItem(voiceModel: widget.voiceModel, height: screenSize * 0.35, width: screenSize * 0.26,),
           SizedBox(height: 28),
           Text(context.locale.processing, style: TextStyle(fontWeight: FontWeight.w600),),
           SizedBox(height: 12),

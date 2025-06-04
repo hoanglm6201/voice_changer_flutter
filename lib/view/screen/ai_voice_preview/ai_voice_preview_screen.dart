@@ -8,13 +8,15 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_preview/processing_screen.dart';
-import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_video.dart';
+import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
+import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
 class AiVoicePreviewScreen extends StatelessWidget {
   final VoiceModel voiceModel;
-  const AiVoicePreviewScreen({super.key, required this.voiceModel});
+  final bool isAudio;
+  const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class AiVoicePreviewScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Expanded(child: FileVideo()),
+            Expanded(child: isAudio ? FileVoice() : FileVideo()),
             SizedBox(height: 40),
             _buildButtons(context),
             SizedBox(height: 20),

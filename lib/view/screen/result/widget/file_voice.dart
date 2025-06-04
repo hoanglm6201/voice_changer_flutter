@@ -181,8 +181,12 @@ class _FileVoiceState extends State<FileVoice> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: _togglePlayPause,
-            child: SvgPicture.asset(
-                _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle
+            child: SizedBox(
+              height: 60,
+              width: 60,
+              child: SvgPicture.asset(
+                  _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle
+              ),
             ),
           ),
         ),

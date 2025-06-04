@@ -54,7 +54,7 @@ flutter:
     - assets/celebrities_and_public_figures/
     - assets/game_and_pop_culture_icons/
 #    - assets/video_test.MOV
-    - assets/video_test.MP4
+    - assets/video_test.mp4
     - assets/audio_test.mp3
 
   fonts:

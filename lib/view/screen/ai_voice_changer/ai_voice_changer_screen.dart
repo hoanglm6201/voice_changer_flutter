@@ -52,7 +52,8 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     });
   }
   void onRecordEnd(){
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoicePreviewScreen(voiceModel: widget.voiceModel,),));
+    bool isAudioRecord = recordMode == RecordMode.audio;
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoicePreviewScreen(voiceModel: widget.voiceModel, isAudio: isAudioRecord),));
   }
   void setRecordMode() {
     setState(() {
@@ -167,7 +168,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
               spacing: 4,
               children: [
                 IconButtonCustom(
-                  icon: SvgPicture.asset(isAudioRecord ? ResIcon.icRecordsMic : ResIcon.icRecordsVideo, height: 30,),
+                  icon: SvgPicture.asset(!isAudioRecord ? ResIcon.icRecordsMic : ResIcon.icRecordsVideo, height: 30,),
                   style: const IconButtonCustomStyle(
                     backgroundColor: Colors.white,
                     borderRadius: 15,
