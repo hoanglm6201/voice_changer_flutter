@@ -1,0 +1,3 @@
+enum RecordMode {
+  audio, video
+}
