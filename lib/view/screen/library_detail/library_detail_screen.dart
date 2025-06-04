@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
@@ -8,6 +9,7 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_video.dart';
 import 'package:voice_changer_flutter/view/screen/library_detail/widget/file_voice.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
@@ -59,40 +61,50 @@ class LibraryDetailScreen extends StatelessWidget {
           ResSpacing.h14,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  spacing: 3.5,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      ResIcon.icFire,
-                      width: 16,
-                      height: 16,
-                    ),
-                    Text(
-                      context.locale.hot_voices,
-                      style: TextStyle(
-                        color: ResColors.textColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  context.locale.see_more,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: ResColors.textColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => AiVoiceListScreen(),
                   ),
-                ),
-              ],
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    spacing: 3.5,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        ResIcon.icFire,
+                        width: 16,
+                        height: 16,
+                      ),
+                      Text(
+                        context.locale.hot_voices,
+                        style: TextStyle(
+                          color: ResColors.textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    context.locale.see_more,
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: ResColors.textColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           ResSpacing.h8,

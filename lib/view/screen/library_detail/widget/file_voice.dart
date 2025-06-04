@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
@@ -13,29 +14,83 @@ class FileVoice extends StatefulWidget {
 }
 
 class _FileVoiceState extends State<FileVoice> {
-  double _currentTime = 0.0;
-  double _totalTime = 0;
+  final player = AudioPlayer();
   bool _isPlaying = false;
+  Duration _currentPosition = Duration.zero;
+  Duration _totalDuration = Duration.zero;
+  bool _isSliderDragging = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadAudio();
   }
 
   Future<void> _loadAudio() async {
-    await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      _totalTime = 63;
-    });
+    try {
+      await player.setSource(AssetSource("audio_test.mp3"));
+
+      // Lắng nghe thay đổi vị trí audio
+      player.onPositionChanged.listen((duration) {
+        if (!_isSliderDragging) {
+          setState(() {
+            _currentPosition = duration;
+          });
+        }
+      });
+
+      // Lắng nghe thay đổi trạng thái player
+      player.onPlayerStateChanged.listen((state) {
+        setState(() {
+          _isPlaying = state == PlayerState.playing;
+        });
+      });
+
+      // Lắng nghe thời lượng total của audio
+      player.onDurationChanged.listen((duration) {
+        setState(() {
+          _totalDuration = duration;
+        });
+      });
+
+      // Lắng nghe khi audio kết thúc
+      player.onPlayerComplete.listen((event) {
+        setState(() {
+          _isPlaying = false;
+          _currentPosition = Duration.zero;
+        });
+      });
+
+    } catch (e) {
+      print("Error loading audio: $e");
+    }
   }
 
-  //hàm cần trả về thời gian dạng 00:00
-  String _formatDuration(double seconds) {
-    final int minutes = (seconds / 60).floor();
-    final int secs = (seconds % 60).floor();
-    return '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+  // Hàm format thời gian từ Duration sang mm:ss
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  // Hàm play/pause audio
+  void _togglePlayPause() async {
+    try {
+      if (_isPlaying) {
+        await player.pause();
+      } else {
+        await player.resume();
+      }
+    } catch (e) {
+      print("Error toggling play/pause: $e");
+    }
+  }
+
+  // Hàm seek audio đến vị trí cụ thể
+  void _seekToPosition(double value) async {
+    final position = Duration(milliseconds: value.toInt());
+    await player.seek(position);
   }
 
   @override
@@ -65,42 +120,81 @@ class _FileVoiceState extends State<FileVoice> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //current duration
-              Text(_formatDuration(_currentTime)),
-              // total duration
-              Text(_formatDuration(_totalTime)),
+              // Current duration
+              Text(
+                _formatDuration(_currentPosition),
+                style: TextStyle(
+                  color: ResColors.textColor,
+                  fontSize: 12,
+                ),
+              ),
+              // Total duration
+              Text(
+                _formatDuration(_totalDuration),
+                style: TextStyle(
+                  color: ResColors.textColor,
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
         ),
         ResSpacing.h6,
-        Slider(
-          value: _currentTime,
-          min: 0,
-          max: _totalTime,
-          onChanged: (value) {
-            setState(() {
-              _currentTime = value;
-            });
-          },
-          activeColor: ResColors.textColor,
-          inactiveColor: Color.fromRGBO(182, 189, 197, 1),
+
+        // Audio Progress Slider
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 29.0),
+          child: SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 4.0,
+              thumbShape: SliderComponentShape.noThumb,
+              overlayShape: SliderComponentShape.noOverlay,
+              activeTrackColor: ResColors.textColor,
+              inactiveTrackColor: Color.fromRGBO(182, 189, 197, 0.3),
+            ),
+            child: Slider(
+              value: _totalDuration.inMilliseconds > 0
+                  ? _currentPosition.inMilliseconds.toDouble()
+                  : 0.0,
+              max: _totalDuration.inMilliseconds.toDouble(),
+              onChanged: (value) {
+                setState(() {
+                  _currentPosition = Duration(milliseconds: value.toInt());
+                });
+              },
+              onChangeStart: (value) {
+                _isSliderDragging = true;
+              },
+              onChangeEnd: (value) {
+                _isSliderDragging = false;
+                _seekToPosition(value);
+              },
+            ),
+          ),
         ),
+
         Spacer(),
+
+        // Play/Pause Button
         Center(
           child: InkWell(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
-            onTap: () {
-              setState(() {
-                _isPlaying = !_isPlaying;
-              });
-            },
-            child: SvgPicture.asset(_isPlaying ? ResIcon.icPlayCircle : ResIcon.icPause),
+            onTap: _togglePlayPause,
+            child: SvgPicture.asset(
+                _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle
+            ),
           ),
         ),
         Spacer(),
         Spacer(),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 }

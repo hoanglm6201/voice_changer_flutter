@@ -22,7 +22,6 @@ class _LibraryScreenState extends State<LibraryScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -73,7 +72,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => LibraryDetailScreen(isVideo: true,),
+                      builder: (context) => LibraryDetailScreen(isVideo: false,),
                     ),
                   );
                 },

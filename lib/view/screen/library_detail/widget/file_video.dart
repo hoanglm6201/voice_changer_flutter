@@ -27,7 +27,7 @@ class _FileVideoState extends State<FileVideo> {
   }
 
   void _initializeVideo() {
-    _controller = VideoPlayerController.asset("assets/video_test.MOV")
+    _controller = VideoPlayerController.asset("assets/video_test.MP4")
       ..initialize().then((_) {
         if (mounted) {
           _controller.setLooping(true);
@@ -89,7 +89,7 @@ class _FileVideoState extends State<FileVideo> {
             children: [
               FittedBox(
                 fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: SizedBox(
                   width: _controller.value.size.width,
                   height: _controller.value.size.height,
