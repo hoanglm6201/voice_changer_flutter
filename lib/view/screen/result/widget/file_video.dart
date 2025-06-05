@@ -105,15 +105,11 @@ class FileVideoState extends State<FileVideo> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              FittedBox(
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: _controller.value.size.width,
-                  height: _controller.value.size.height,
-                  child: VideoPlayer(_controller),
-                ),
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
               ),
+
               if(!_isPlaying) Align(
                 alignment: Alignment.center,
                 child: SvgPicture.asset(

@@ -88,6 +88,10 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       print("✅ Đã quay xong 1 đoạn: ${paths.first}");
       finalPath = paths.first;
     }
+    setState(() {
+      isPausing = false;
+      isRecording = false;
+    });
 
     bool isAudioRecord = recordMode == RecordMode.audio;
     Navigator.push(context, CupertinoPageRoute(builder: (context) =>
@@ -97,6 +101,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
         videoPath: finalPath,),
       )
     );
+    recordingProvider.reset();
   }
   void setRecordMode() {
     setState(() {

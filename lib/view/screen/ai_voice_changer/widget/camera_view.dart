@@ -58,7 +58,15 @@ class _CameraViewState extends State<CameraView> {
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done && _controller != null) {
-          return CameraPreview(_controller!);
+          return FittedBox(
+            fit: BoxFit.cover,
+            clipBehavior: Clip.hardEdge,
+            child: SizedBox(
+              width: _controller!.value.previewSize!.height,
+              height: _controller!.value.previewSize!.width,
+              child: CameraPreview(_controller!),
+            ),
+          );
         } else {
           return Container(color: Colors.black);
         }
