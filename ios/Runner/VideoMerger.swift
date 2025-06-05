@@ -53,7 +53,12 @@ import AVFoundation
         let videoComposition = AVMutableVideoComposition()
         videoComposition.instructions = [mainInstruction]
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
-        videoComposition.renderSize = CGSize(width: 1080, height: 1920) // hoặc lấy từ asset
+        
+        // Get the natural size of the first video
+        if let firstVideoTrack = AVURLAsset(url: URL(fileURLWithPath: videoPaths[0])).tracks(withMediaType: .video).first {
+            let naturalSize = firstVideoTrack.naturalSize
+            videoComposition.renderSize = naturalSize
+        }
 
         guard let exportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) else {
             completion(false, "Export session failed")

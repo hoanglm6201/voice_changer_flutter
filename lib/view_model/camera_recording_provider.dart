@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-class RecordingProvider with ChangeNotifier {
+class CameraRecordingProvider with ChangeNotifier {
   CameraController? cameraController;
   final List<XFile> _recordedSegments = [];
 
@@ -47,4 +47,5 @@ class RecordingProvider with ChangeNotifier {
     _recordedSegments.clear();
     notifyListeners();
   }
+
 }

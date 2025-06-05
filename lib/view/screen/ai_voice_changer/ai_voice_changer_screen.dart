@@ -8,6 +8,7 @@ import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/service/video_merge_helper.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/camera_view.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/recording_widget.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_preview/ai_voice_preview_screen.dart';
@@ -15,6 +16,9 @@ import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/confirm_dialog.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_provider.dart';
+
+import '../../../view_model/camera_recording_provider.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
   final VoiceModel voiceModel;
@@ -32,6 +36,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
 
   void setRecordingState(){
+    final recordingProvider = context.read<CameraRecordingProvider>();
     if(_timer <=2 && isRecording){
       _showSnackBar();
       return;
@@ -40,24 +45,65 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       isRecording = !isRecording;
       _timer = 0;
     });
-    if(isPausing){
-      setPausingState();
-    }
-    if(!isRecording){
+    if (isRecording) {
+      recordingProvider.startRecording();
+    } else {
       onRecordEnd();
     }
   }
-  void setPausingState(){
-    setState(() {
-      isPausing = !isPausing;
-    });
+  void setPausingState() {
+    final recordingProvider = context.read<CameraRecordingProvider>();
+
+    if (isRecording) {
+      if (!isPausing) {
+        recordingProvider.pauseRecording();
+      } else {
+        recordingProvider.resumeRecording();
+      }
+
+      setState(() {
+        isPausing = !isPausing;
+      });
+    }
   }
+
   void startRecord(){
     context.read<AudioRecorderProvider>().startRecording();
   }
-  void onRecordEnd(){
+
+  Future<void> onRecordEnd() async {
+    final recordingProvider = context.read<CameraRecordingProvider>();
+
+    await recordingProvider.stopRecording();
+
+    final paths = recordingProvider.recordedSegments.map((e) => e.path).toList();
+
+    String? finalPath;
+
+    if (paths.length > 1) {
+      final merged = await VideoMergerHelper.mergeVideos(paths);
+      if (merged != null) {
+        print("✅ Đã merge video: $merged");
+        finalPath = merged;
+      }
+    } else if (paths.isNotEmpty) {
+      print("✅ Đã quay xong 1 đoạn: ${paths.first}");
+      finalPath = paths.first;
+    }
+    setState(() {
+      isPausing = false;
+      isRecording = false;
+    });
+
     bool isAudioRecord = recordMode == RecordMode.audio;
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoicePreviewScreen(voiceModel: widget.voiceModel, isAudio: isAudioRecord),));
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>
+      AiVoicePreviewScreen(
+        voiceModel: widget.voiceModel,
+        isAudio: isAudioRecord,
+        videoPath: finalPath,),
+      )
+    );
+    recordingProvider.reset();
   }
   void setRecordMode() {
     setState(() {
@@ -92,7 +138,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
               return;
             }
             Navigator.pop(context);
-            },
+          },
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
             borderRadius: 15,
@@ -103,7 +149,9 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           if(!isAudioRecord)
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icRotateCamera),
-            onPressed: () {},
+            onPressed: () {
+              context.read<CameraProvider>().switchCamera();
+            },
             style: const IconButtonCustomStyle(
               backgroundColor: Colors.white,
               borderRadius: 15,
