@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/view_model/camera_provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_recording_provider.dart';
 
 class CameraView extends StatelessWidget {
   const CameraView({super.key});
@@ -15,6 +16,7 @@ class CameraView extends StatelessWidget {
       context.read<CameraProvider>().initializeCamera();
       return Container(color: Colors.black);
     }
+    context.read<CameraRecordingProvider>().setCameraController(controller);
 
     return FittedBox(
       fit: BoxFit.cover,
