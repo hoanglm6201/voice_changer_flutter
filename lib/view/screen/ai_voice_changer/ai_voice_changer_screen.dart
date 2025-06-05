@@ -35,7 +35,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   RecordMode recordMode = RecordMode.video;
 
 
-  void setRecordingState(){
+  Future<void> setRecordingState() async {
     bool isAudioRecord = recordMode == RecordMode.audio;
     final recordingProvider = context.read<CameraRecordingProvider>();
     if(_timer <=2 && isRecording){
@@ -48,7 +48,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     });
     if (isRecording) {
       if (isAudioRecord) {
-        context.read<AudioRecorderProvider>().startRecording();
+        await context.read<AudioRecorderProvider>().startRecording();
       } else {
         recordingProvider.startRecording();
       }

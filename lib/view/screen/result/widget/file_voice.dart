@@ -75,6 +75,7 @@ class FileVoiceState extends State<FileVoice> {
             _isPlaying = false;
             _currentPosition = Duration.zero;
           });
+          player.seek(Duration.zero);
         }
       });
 
