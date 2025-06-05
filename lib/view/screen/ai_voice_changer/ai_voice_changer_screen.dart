@@ -13,7 +13,7 @@ import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/record
 import 'package:voice_changer_flutter/view/screen/ai_voice_preview/ai_voice_preview_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
-import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/confirm_dialog.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {

@@ -13,7 +13,13 @@ class GradientButtonStyle {
     this.shape = BoxShape.rectangle,
     this.border,
     this.borderRadius,
-    this.boxShadow,
+    this.boxShadow = const [
+      BoxShadow(
+        color: Colors.black12,
+        blurRadius: 16,
+        offset: Offset(0, 2),
+      ),
+    ],
   });
 
   BoxDecoration toBoxDecoration() {

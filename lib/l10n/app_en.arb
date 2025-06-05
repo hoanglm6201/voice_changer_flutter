@@ -47,5 +47,9 @@
   "delete": "Delete",
   "sub_delete": "You will not be able to undo this action.",
   "keep_it": "Keep it",
-  "continuee": "Continue"
+  "continuee": "Continue",
+  "place_holder_text_to_audio": "Input text here to generate audio, so after that you can add unique voice effects!",
+  "setting": "Setting",
+  "manage_speech": "Manage Speech",
+  "pitch_rate": "Pitch Rate"
 }

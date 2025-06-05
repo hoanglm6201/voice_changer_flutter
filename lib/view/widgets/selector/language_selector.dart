@@ -9,7 +9,8 @@ import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 
 class LanguageSelector extends StatefulWidget {
-  const LanguageSelector({super.key});
+  final Function(LanguageSelect language) onLanguageChanged;
+  const LanguageSelector({super.key, required this.onLanguageChanged});
 
   @override
   State<LanguageSelector> createState() => _LanguageSelectorState();
@@ -39,6 +40,13 @@ class _LanguageSelectorState extends State<LanguageSelector> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         margin: EdgeInsets.symmetric(horizontal: 25),
         child: InkWell(
@@ -98,36 +106,40 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                     }
                   }
                 },
-                child: ListView.builder(
+                child: Scrollbar(
                   controller: _scrollController,
-                  padding: EdgeInsets.only(top: 10),
-                  itemCount: LanguageSelect.values.length,
-                  itemBuilder: (context, index) {
-                    final item = LanguageSelect.values[index];
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _languageSelector = item;
-                          _isOpen = false;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(12).copyWith(right: 14),
-                        child: Center(
-                          child: Text(
-                            item.displayName,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: _languageSelector == item
-                                  ? ResColors.colorPurple
-                                  : ResColors.textColor,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    padding: EdgeInsets.only(top: 10),
+                    itemCount: LanguageSelect.values.length,
+                    itemBuilder: (context, index) {
+                      final item = LanguageSelect.values[index];
+                      return InkWell(
+                        onTap: () {
+                          widget.onLanguageChanged(item);
+                          setState(() {
+                            _languageSelector = item;
+                            _isOpen = false;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(12).copyWith(right: 14),
+                          child: Center(
+                            child: Text(
+                              item.displayName,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: _languageSelector == item
+                                    ? ResColors.colorPurple
+                                    : ResColors.textColor,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               )
             ],
