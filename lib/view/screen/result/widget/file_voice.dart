@@ -7,7 +7,8 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 
 class FileVoice extends StatefulWidget {
-  const FileVoice({super.key});
+  final String? audioPath;
+  const FileVoice({super.key, this.audioPath});
 
   @override
   State<FileVoice> createState() => FileVoiceState();
@@ -32,7 +33,13 @@ class FileVoiceState extends State<FileVoice> {
 
   Future<void> _loadAudio() async {
     try {
-      await player.setSource(AssetSource("audio_test.mp3"));
+      if (widget.audioPath != null) {
+        await player.setSource(DeviceFileSource(widget.audioPath!));
+      } else {
+        await player.setSource(AssetSource("audio_test.mp3"));
+      }
+
+      // await player.setSource(AssetSource("audio_test.mp3"));
 
       // Lắng nghe thay đổi vị trí audio
       player.onPositionChanged.listen((duration) {

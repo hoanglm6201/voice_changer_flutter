@@ -16,8 +16,8 @@ import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 class AiVoicePreviewScreen extends StatefulWidget {
   final VoiceModel voiceModel;
   final bool isAudio;
-  final String? videoPath;
-  const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio, this.videoPath});
+  final String? path;
+  const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio, this.path});
 
   @override
   State<AiVoicePreviewScreen> createState() => _AiVoicePreviewScreenState();
@@ -48,7 +48,7 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Expanded(child: widget.isAudio ? FileVoice(key: _voiceKey,) : FileVideo(key: _videoKey, videoPath: widget.videoPath,)),
+            Expanded(child: widget.isAudio ? FileVoice(key: _voiceKey, audioPath: widget.path,) : FileVideo(key: _videoKey, videoPath: widget.path,)),
             SizedBox(height: 40),
             _buildButtons(context),
             SizedBox(height: 20),

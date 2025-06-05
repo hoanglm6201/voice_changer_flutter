@@ -42,15 +42,18 @@ class AudioRecorderProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> stopRecording() async {
+  Future<String?> stopRecording() async {
     if (_isRecording) {
       _recordedFilePath = await _recorder.stop();
       _isRecording = false;
       _isPaused = false;
       notifyListeners();
       print("✅ Recording saved: $_recordedFilePath");
+      return _recordedFilePath;
     }
+    return null;
   }
+
 
   Future<void> cancelRecording() async {
     if (_isRecording) {
