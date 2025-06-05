@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 import 'package:record/record.dart';
 
 class AudioRecorderProvider extends ChangeNotifier {
@@ -13,13 +15,17 @@ class AudioRecorderProvider extends ChangeNotifier {
 
   Future<void> startRecording() async {
     if (await _recorder.hasPermission()) {
+      final dir = await getTemporaryDirectory();
+      final filePath = p.join(dir.path, 'record${DateTime.now().millisecondsSinceEpoch}.m4a');
+
       _recordedFilePath = null;
       await _recorder.start(
         const RecordConfig(),
-        path: '',
+        path: filePath,
       );
       _isRecording = true;
       _isPaused = false;
+      print('start record');
       notifyListeners();
     } else {
       print("❌ No microphone permission");
@@ -42,15 +48,18 @@ class AudioRecorderProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> stopRecording() async {
+  Future<String?> stopRecording() async {
     if (_isRecording) {
       _recordedFilePath = await _recorder.stop();
       _isRecording = false;
       _isPaused = false;
       notifyListeners();
       print("✅ Recording saved: $_recordedFilePath");
+      return _recordedFilePath;
     }
+    return null;
   }
+
 
   Future<void> cancelRecording() async {
     if (_isRecording) {

@@ -35,7 +35,8 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   RecordMode recordMode = RecordMode.video;
 
 
-  void setRecordingState(){
+  Future<void> setRecordingState() async {
+    bool isAudioRecord = recordMode == RecordMode.audio;
     final recordingProvider = context.read<CameraRecordingProvider>();
     if(_timer <=2 && isRecording){
       _showSnackBar();
@@ -46,64 +47,70 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       _timer = 0;
     });
     if (isRecording) {
-      recordingProvider.startRecording();
+      if (isAudioRecord) {
+        await context.read<AudioRecorderProvider>().startRecording();
+      } else {
+        recordingProvider.startRecording();
+      }
+      // recordingProvider.startRecording();
     } else {
       onRecordEnd();
     }
   }
   void setPausingState() {
-    final recordingProvider = context.read<CameraRecordingProvider>();
+    if (!isRecording) return;
 
-    if (isRecording) {
-      if (!isPausing) {
-        recordingProvider.pauseRecording();
-      } else {
-        recordingProvider.resumeRecording();
-      }
+    final isAudioRecord = recordMode == RecordMode.audio;
+    final audioProvider = context.read<AudioRecorderProvider>();
+    final videoProvider = context.read<CameraRecordingProvider>();
 
-      setState(() {
-        isPausing = !isPausing;
-      });
+    if (isPausing) {
+      isAudioRecord ? audioProvider.resumeRecording() : videoProvider.resumeRecording();
+    } else {
+      isAudioRecord ? audioProvider.pauseRecording() : videoProvider.pauseRecording();
     }
+
+    setState(() {
+      isPausing = !isPausing;
+    });
   }
 
-  void startRecord(){
-    context.read<AudioRecorderProvider>().startRecording();
-  }
 
   Future<void> onRecordEnd() async {
     final recordingProvider = context.read<CameraRecordingProvider>();
-
-    await recordingProvider.stopRecording();
-
-    final paths = recordingProvider.recordedSegments.map((e) => e.path).toList();
-
+    final audioRecordingProvider = context.read<AudioRecorderProvider>();
+    final isAudioRecord = recordMode == RecordMode.audio;
     String? finalPath;
 
-    if (paths.length > 1) {
-      final merged = await VideoMergerHelper.mergeVideos(paths);
-      if (merged != null) {
-        print("✅ Đã merge video: $merged");
-        finalPath = merged;
+
+    if (isAudioRecord) {
+      finalPath = await audioRecordingProvider.stopRecording();
+    } else {
+      await recordingProvider.stopRecording();
+      final paths = recordingProvider.recordedSegments.map((e) => e.path).toList();
+      if (paths.length > 1) {
+        final merged = await VideoMergerHelper.mergeVideos(paths);
+        if (merged != null) {
+          print("✅ Đã merge video: $merged");
+          finalPath = merged;
+        }
+      } else if (paths.isNotEmpty) {
+        print("✅ Đã quay xong 1 đoạn: ${paths.first}");
+        finalPath = paths.first;
       }
-    } else if (paths.isNotEmpty) {
-      print("✅ Đã quay xong 1 đoạn: ${paths.first}");
-      finalPath = paths.first;
+      recordingProvider.reset();
     }
     setState(() {
       isPausing = false;
       isRecording = false;
     });
-
-    bool isAudioRecord = recordMode == RecordMode.audio;
     Navigator.push(context, CupertinoPageRoute(builder: (context) =>
       AiVoicePreviewScreen(
         voiceModel: widget.voiceModel,
         isAudio: isAudioRecord,
-        videoPath: finalPath,),
+        path: finalPath,),
       )
     );
-    recordingProvider.reset();
   }
   void setRecordMode() {
     setState(() {
