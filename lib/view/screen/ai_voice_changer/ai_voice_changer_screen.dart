@@ -8,6 +8,7 @@ import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/service/video_merge_helper.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/camera_view.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/widget/recording_widget.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_preview/ai_voice_preview_screen.dart';
@@ -15,6 +16,7 @@ import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_controller.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
   final VoiceModel voiceModel;
@@ -32,20 +34,40 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
 
   void setRecordingState(){
+    final recordingProvider = context.read<RecordingProvider>();
     if(_timer <=2 && isRecording){
       _showSnackBar();
       return;
     }
+    if (isRecording && !isPausing) {
+      // Tạm dừng ghi
+      recordingProvider.pauseRecording();
+      setPausingState();
+      return;
+    }
+    if (isRecording && isPausing) {
+      // Tiếp tục ghi
+      recordingProvider.resumeRecording();
+      setPausingState();
+      return;
+    }
+
     setState(() {
       isRecording = !isRecording;
       _timer = 0;
     });
-    if(isPausing){
-      setPausingState();
-    }
-    if(!isRecording){
+    if (isRecording) {
+      recordingProvider.startRecording();
+    } else {
       onRecordEnd();
     }
+
+    // if(isPausing){
+    //   setPausingState();
+    // }
+    // if(!isRecording){
+    //   onRecordEnd();
+    // }
   }
   void setPausingState(){
     setState(() {
@@ -55,9 +77,34 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   void startRecord(){
     context.read<AudioRecorderProvider>().startRecording();
   }
-  void onRecordEnd(){
+  Future<void> onRecordEnd() async {
+    final recordingProvider = context.read<RecordingProvider>();
+
+    await recordingProvider.stopRecording();
+
+    final paths = recordingProvider.recordedSegments.map((e) => e.path).toList();
+
+    String? finalPath;
+
+    if (paths.length > 1) {
+      final merged = await VideoMergerHelper.mergeVideos(paths);
+      if (merged != null) {
+        print("✅ Đã merge video: $merged");
+        finalPath = merged;
+      }
+    } else if (paths.isNotEmpty) {
+      print("✅ Đã quay xong 1 đoạn: ${paths.first}");
+      finalPath = paths.first;
+    }
+
     bool isAudioRecord = recordMode == RecordMode.audio;
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => AiVoicePreviewScreen(voiceModel: widget.voiceModel, isAudio: isAudioRecord),));
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>
+      AiVoicePreviewScreen(
+        voiceModel: widget.voiceModel,
+        isAudio: isAudioRecord,
+        videoPath: finalPath ?? paths.first,),
+      )
+    );
   }
   void setRecordMode() {
     setState(() {
@@ -92,7 +139,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
               return;
             }
             Navigator.pop(context);
-            },
+          },
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
             borderRadius: 15,

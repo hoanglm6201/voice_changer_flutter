@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:provider/provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_controller.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -19,19 +21,27 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> _setupCamera() async {
-    final cameras = await availableCameras();
-    final frontCamera = cameras.firstWhere(
-          (cam) => cam.lensDirection == CameraLensDirection.front,
-    );
+    try {
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere(
+            (cam) => cam.lensDirection == CameraLensDirection.front,
+      );
 
-    _controller = CameraController(
-      frontCamera,
-      ResolutionPreset.medium,
-      enableAudio: false,
-    );
+      _controller = CameraController(
+        frontCamera,
+        ResolutionPreset.medium,
+        enableAudio: true,
+      );
 
-    _initializeControllerFuture = _controller!.initialize();
-    if (mounted) setState(() {});
+      _initializeControllerFuture = _controller!.initialize();
+      await _initializeControllerFuture;
+      if (mounted && _controller != null) {
+        context.read<RecordingProvider>().setCameraController(_controller!);
+        setState(() {});
+      }
+    } catch (e) {
+      print('Camera init error: $e');
+    }
   }
 
   @override

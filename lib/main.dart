@@ -11,6 +11,7 @@ import 'package:voice_changer_flutter/view_model/ads_provider.dart';
 import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:voice_changer_flutter/view_model/merge_video_provider.dart';
 import 'package:voice_changer_flutter/view_model/purchase_provider.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ void main() async {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => LocateViewModel()),
+      ChangeNotifierProvider(create: (_) => MergeVideoProvider()),
       ChangeNotifierProvider(create: (_) => purchaseProvider),
       ChangeNotifierProvider(create: (_) => adsProvider),
       ChangeNotifierProxyProvider2<AdsProvider, PurchaseProvider, AppStateProvider>(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,7 +7,8 @@ import 'package:video_player/video_player.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 
 class FileVideo extends StatefulWidget {
-  const FileVideo({super.key});
+  final String? videoPath;
+  const FileVideo({super.key, this.videoPath});
 
   @override
   State<FileVideo> createState() => FileVideoState();
@@ -35,8 +38,15 @@ class FileVideoState extends State<FileVideo> {
   }
 
   void _initializeVideo() {
-    _controller = VideoPlayerController.asset("assets/video_test.mp4")
-      ..initialize().then((_) {
+    // _controller = VideoPlayerController.asset("assets/video_test.mp4")
+    if (widget.videoPath != null && widget.videoPath!.isNotEmpty) {
+      _controller = VideoPlayerController.file(
+        File(widget.videoPath!),
+      );
+    } else {
+      _controller = VideoPlayerController.asset("assets/video_test.mp4");
+    }
+    _controller.initialize().then((_) {
         if (mounted) {
           _controller.setLooping(true);
           _controller.addListener(_videoListener);
