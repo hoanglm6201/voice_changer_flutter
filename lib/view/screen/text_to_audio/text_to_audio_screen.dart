@@ -1,12 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:voice_changer_flutter/core/res/anims.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/view/screen/voice_effect/voice_effect_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/gradient_button.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/loading_dialog.dart';
 import 'package:voice_changer_flutter/view/widgets/selector/language_selector.dart';
 
 class TextToAudioScreen extends StatefulWidget {
@@ -18,6 +22,13 @@ class TextToAudioScreen extends StatefulWidget {
 
 class _TextToAudioScreenState extends State<TextToAudioScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  final LoadingDialog _loadingDialog = LoadingDialog(
+    animLoading: ResAnim.animLoading,
+    onCompleted: () {
+
+    },
+  );
+
   double _speechValue = 50;
   double _pitchValue = 50;
 
@@ -300,10 +311,21 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
               style: GradientButtonStyle(
                 borderRadius: BorderRadius.circular(15),
               ),
-              onTap: () {},
+              onTap: () {
+                _loadingDialog.show(context);
+                Future.delayed(Duration(seconds: 2), () {
+                  _loadingDialog.dismiss();
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => VoiceEffectScreen(),
+                    ),
+                  );
+                });
+              },
               child: Center(
                 child: Text(
-                  context.locale.continuee,
+                  context.locale.continue_action,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,

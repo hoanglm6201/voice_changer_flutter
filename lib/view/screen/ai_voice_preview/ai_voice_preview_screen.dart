@@ -128,7 +128,7 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
                     borderRadius: BorderRadius.circular(15),
                     gradient: LinearGradient(colors: [Color(0xFFF0A1F2), Color(0xFF6637F9)])
                   ),
-                  child: Text(context.locale.continuee,
+                  child: Text(context.locale.continue_action,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500
