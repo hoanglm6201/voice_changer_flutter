@@ -16,7 +16,8 @@ import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
-import 'package:voice_changer_flutter/view_model/camera_controller.dart';
+
+import '../../../view_model/camera_recording_provider.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
   final VoiceModel voiceModel;
@@ -34,17 +35,12 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
 
 
   void setRecordingState(){
-    final recordingProvider = context.read<RecordingProvider>();
+    final recordingProvider = context.read<CameraRecordingProvider>();
     if(_timer <=2 && isRecording){
       _showSnackBar();
       return;
     }
-    if (isRecording && !isPausing) {
-      // Tạm dừng ghi
-      recordingProvider.pauseRecording();
-      setPausingState();
-      return;
-    }
+
     if (isRecording && isPausing) {
       // Tiếp tục ghi
       recordingProvider.resumeRecording();
@@ -61,15 +57,16 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     } else {
       onRecordEnd();
     }
-
-    // if(isPausing){
-    //   setPausingState();
-    // }
-    // if(!isRecording){
-    //   onRecordEnd();
-    // }
   }
   void setPausingState(){
+    final recordingProvider = context.read<CameraRecordingProvider>();
+    if (isRecording && !isPausing) {
+      print('asdasd');
+      // Tạm dừng ghi
+      recordingProvider.pauseRecording();
+      setPausingState();
+      return;
+    }
     setState(() {
       isPausing = !isPausing;
     });
@@ -78,7 +75,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     context.read<AudioRecorderProvider>().startRecording();
   }
   Future<void> onRecordEnd() async {
-    final recordingProvider = context.read<RecordingProvider>();
+    final recordingProvider = context.read<CameraRecordingProvider>();
 
     await recordingProvider.stopRecording();
 
@@ -102,7 +99,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       AiVoicePreviewScreen(
         voiceModel: widget.voiceModel,
         isAudio: isAudioRecord,
-        videoPath: finalPath ?? paths.first,),
+        videoPath: finalPath,),
       )
     );
   }

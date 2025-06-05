@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-class MergeVideoProvider with ChangeNotifier {
+class CameraRecordingProvider with ChangeNotifier {
   CameraController? cameraController;
   final List<XFile> _recordedSegments = [];
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
-import 'package:voice_changer_flutter/view_model/camera_controller.dart';
+
+import '../../../../view_model/camera_recording_provider.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -36,7 +37,7 @@ class _CameraViewState extends State<CameraView> {
       _initializeControllerFuture = _controller!.initialize();
       await _initializeControllerFuture;
       if (mounted && _controller != null) {
-        context.read<RecordingProvider>().setCameraController(_controller!);
+        context.read<CameraRecordingProvider>().setCameraController(_controller!);
         setState(() {});
       }
     } catch (e) {
