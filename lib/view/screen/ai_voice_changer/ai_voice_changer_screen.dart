@@ -1,6 +1,8 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/core/enum/record_mode.dart';
@@ -22,7 +24,8 @@ import '../../../view_model/camera_recording_provider.dart';
 
 class AiVoiceChangerScreen extends StatefulWidget {
   final VoiceModel voiceModel;
-  const AiVoiceChangerScreen({super.key, required this.voiceModel});
+  final bool isAIVoiceChanger;
+  const AiVoiceChangerScreen({super.key, required this.voiceModel, required this.isAIVoiceChanger});
 
   @override
   State<AiVoiceChangerScreen> createState() => _AiVoiceChangerScreenState();
@@ -129,7 +132,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icBack),
           onPressed: () {
-            print('asda');
             if(isRecording){
               final ConfirmDialog confirmDialog = ConfirmDialog(
                 imageHeader: ResImages.iconDiscard,
@@ -263,7 +265,31 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           )
         ),
         /// BUTTON IMAGE VOICE LIST
-        isRecording ? SizedBox(width: 90) : SizedBox(
+        !widget.isAIVoiceChanger
+          ? GestureDetector(
+            onTap: () {
+              _filePicker();
+            },
+            child: Column(
+              spacing: 4,
+              children: [
+                IconButtonCustom(icon: SvgPicture.asset(ResIcon.icUploadFile , height: 30,),
+                  style: const IconButtonCustomStyle(
+                    backgroundColor: Colors.white,
+                    borderRadius: 15,
+                    padding: EdgeInsets.all(11.0),
+                  ),
+                ),
+                Text(
+                  context.locale.upload_file,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12),
+                )
+              ],
+            ),
+          )
+          : isRecording ? SizedBox(width: 90) : SizedBox(
           width: 90,
           child: Column(
             spacing: 4,
@@ -330,4 +356,34 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       ),
     );
   }
+
+  Future<String?> _filePicker() async {
+    final isAudioRecord = recordMode == RecordMode.audio;
+
+    if (isAudioRecord) {
+      // Pick audio file
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['mp3', 'wav', 'm4a'],
+      );
+
+      if (result != null && result.files.single.path != null) {
+        final audioPath = result.files.single.path!;
+        print('Picked audio: $audioPath');
+        return audioPath;
+      }
+    } else {
+      // Pick video from gallery
+      final pickedFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        final videoPath = pickedFile.path;
+        print('Picked video: $videoPath');
+        return videoPath;
+      }
+    }
+
+    return null;
+  }
+
 }

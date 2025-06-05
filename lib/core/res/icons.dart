@@ -18,6 +18,7 @@ class ResIcon {
   static const String icLibrary = '${_basePath}ic_library.svg';
   static const String icSetting = '${_basePath}ic_setting.svg';
   static const String icUpload = '${_basePath}ic_upload.svg';
+  static const String icUploadFile = '${_basePath}ic_upload_file.svg';
   static const String icCheck = '${_basePath}ic_check.svg';
   static const String icMic = '${_basePath}ic_mic.svg';
   static const String icRecordsMic = '${_basePath}ic_records_micro.svg';

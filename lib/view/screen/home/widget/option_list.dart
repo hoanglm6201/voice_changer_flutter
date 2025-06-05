@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_changer_screen.dart';
+import 'package:voice_changer_flutter/view/screen/prank_sound/prank_sound_screen.dart';
 import 'package:voice_changer_flutter/view/screen/text_to_audio/text_to_audio_screen.dart';
 
 class OptionList extends StatelessWidget {
@@ -16,7 +19,7 @@ class OptionList extends StatelessWidget {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => TextToAudioScreen(),
+                builder: (context) => AiVoiceChangerScreen(voiceModel: voiceList.first, isAIVoiceChanger: false,),
               ),
             );
           }
@@ -40,7 +43,7 @@ class OptionList extends StatelessWidget {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => TextToAudioScreen(),
+                builder: (context) => PrankSoundScreen(),
               ),
             );
           }

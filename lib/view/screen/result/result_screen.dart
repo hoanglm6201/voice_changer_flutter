@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
@@ -63,17 +64,31 @@ class _ResultScreenState extends State<ResultScreen> {
           IconButtonCustom(
             icon: SvgPicture.asset(_isDownloaded ? ResIcon.icDownloadSuccess : ResIcon.icDownload),
             onPressed: () async {
-              await showDialog(
-                barrierDismissible: false,
-                context: context, builder: (context) => Dialog(
-                  child: DownloadDialog(
-                    onDownloadSuccess: (bool isDownloadSuccess) {
-                      setState(() {
-                        _isDownloaded = isDownloadSuccess;
-                      });
-                  }, path: widget.path, isVideo: widget.isVideo,)
-                ),
-              );
+              print('heheh');
+              final status = await Permission.storage.request();
+              print(status);
+              if (!status.isGranted) {
+                print("❌ Permission denied");
+                return;
+              }
+              print('object');
+              if (widget.path != null) {
+                await showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: DownloadDialog(
+                      onDownloadSuccess: (bool isDownloadSuccess) {
+                        setState(() {
+                          _isDownloaded = isDownloadSuccess;
+                        });
+                      },
+                      path: widget.path,
+                      isVideo: widget.isVideo,
+                    ),
+                  ),
+                );
+              }
             },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
