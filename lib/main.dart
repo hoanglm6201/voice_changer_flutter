@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: ResFont.sfCompactDisplay,
           brightness: Brightness.light,
-
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           scaffoldBackgroundColor: Color(0xFFF3F4F8),
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.transparent,

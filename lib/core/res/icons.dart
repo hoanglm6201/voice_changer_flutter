@@ -36,4 +36,5 @@ class ResIcon {
   static const String icHomeResult = '${_basePath}ic_home_result.svg';
   static const String icDownload = '${_basePath}ic_download.svg';
   static const String icDownloadSuccess = '${_basePath}ic_download_success.svg';
+  static const String icVolume = '${_basePath}ic_volume.svg';
 }

@@ -5,7 +5,7 @@ import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
-import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
+import 'package:voice_changer_flutter/view/widgets/dialog/confirm_dialog.dart';
 
 class LibraryItem extends StatelessWidget {
    const LibraryItem({super.key});
