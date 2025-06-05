@@ -32,6 +32,7 @@ class ResIcon {
   static const String icDelete = '${_basePath}ic_delete.svg';
   static const String icPlayCircle = '${_basePath}ic_play_circle.svg';
   static const String icCamera = '${_basePath}ic_camera.svg';
+  static const String icArrowRight = '${_basePath}ic_arrow_right.svg';
   static const String icHomeResult = '${_basePath}ic_home_result.svg';
   static const String icDownload = '${_basePath}ic_download.svg';
   static const String icDownloadSuccess = '${_basePath}ic_download_success.svg';
