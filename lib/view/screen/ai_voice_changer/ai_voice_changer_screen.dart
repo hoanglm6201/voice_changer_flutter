@@ -16,6 +16,7 @@ import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/delete_dialog.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_provider.dart';
 
 import '../../../view_model/camera_recording_provider.dart';
 
@@ -69,6 +70,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
   void startRecord(){
     context.read<AudioRecorderProvider>().startRecording();
   }
+
   Future<void> onRecordEnd() async {
     final recordingProvider = context.read<CameraRecordingProvider>();
 
@@ -147,7 +149,9 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
           if(!isAudioRecord)
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icRotateCamera),
-            onPressed: () {},
+            onPressed: () {
+              context.read<CameraProvider>().switchCamera();
+            },
             style: const IconButtonCustomStyle(
               backgroundColor: Colors.white,
               borderRadius: 15,

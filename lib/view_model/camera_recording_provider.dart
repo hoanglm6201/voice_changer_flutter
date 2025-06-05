@@ -47,4 +47,5 @@ class CameraRecordingProvider with ChangeNotifier {
     _recordedSegments.clear();
     notifyListeners();
   }
+
 }

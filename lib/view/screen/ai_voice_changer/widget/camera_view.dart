@@ -1,76 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_provider.dart';
 
-import '../../../../view_model/camera_recording_provider.dart';
-
-class CameraView extends StatefulWidget {
+class CameraView extends StatelessWidget {
   const CameraView({super.key});
 
   @override
-  State<CameraView> createState() => _CameraViewState();
-}
-
-class _CameraViewState extends State<CameraView> {
-  CameraController? _controller;
-  Future<void>? _initializeControllerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _setupCamera();
-  }
-
-  Future<void> _setupCamera() async {
-    try {
-      final cameras = await availableCameras();
-      final frontCamera = cameras.firstWhere(
-            (cam) => cam.lensDirection == CameraLensDirection.front,
-      );
-
-      _controller = CameraController(
-        frontCamera,
-        ResolutionPreset.medium,
-        enableAudio: true,
-      );
-
-      _initializeControllerFuture = _controller!.initialize();
-      await _initializeControllerFuture;
-      if (mounted && _controller != null) {
-        context.read<CameraRecordingProvider>().setCameraController(_controller!);
-        setState(() {});
-      }
-    } catch (e) {
-      print('Camera init error: $e');
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final recordingProvider = context.watch<CameraProvider>();
+    final controller = recordingProvider.controller;
 
-    return FutureBuilder(
-      future: _initializeControllerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && _controller != null) {
-          return FittedBox(
-            fit: BoxFit.cover,
-            clipBehavior: Clip.hardEdge,
-            child: SizedBox(
-              width: _controller!.value.previewSize!.height,
-              height: _controller!.value.previewSize!.width,
-              child: CameraPreview(_controller!),
-            ),
-          );
-        } else {
-          return Container(color: Colors.black);
-        }
-      },
+    if (controller == null || !controller.value.isInitialized) {
+      context.read<CameraProvider>().initializeCamera();
+      return Container(color: Colors.black);
+    }
+
+    return FittedBox(
+      fit: BoxFit.cover,
+      clipBehavior: Clip.hardEdge,
+      child: SizedBox(
+        width: controller.value.previewSize!.height,
+        height: controller.value.previewSize!.width,
+        child: CameraPreview(controller),
+      ),
     );
   }
 }
+

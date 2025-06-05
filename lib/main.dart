@@ -10,6 +10,7 @@ import 'package:voice_changer_flutter/view/screen/splash/splash_screen.dart';
 import 'package:voice_changer_flutter/view_model/ads_provider.dart';
 import 'package:voice_changer_flutter/view_model/app_state_provider.dart';
 import 'package:voice_changer_flutter/view_model/audio_record_provider.dart';
+import 'package:voice_changer_flutter/view_model/camera_provider.dart';
 import 'package:voice_changer_flutter/view_model/camera_recording_provider.dart';
 import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,6 +31,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => LocateViewModel()),
       ChangeNotifierProvider(create: (_) => CameraRecordingProvider()),
       ChangeNotifierProvider(create: (_) => AudioRecorderProvider()),
+      ChangeNotifierProvider(create: (_) => CameraProvider()),
       ChangeNotifierProvider(create: (_) => purchaseProvider),
       ChangeNotifierProvider(create: (_) => adsProvider),
       ChangeNotifierProxyProvider2<AdsProvider, PurchaseProvider, AppStateProvider>(
