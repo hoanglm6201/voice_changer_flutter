@@ -40,14 +40,6 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       _showSnackBar();
       return;
     }
-
-    if (isRecording && isPausing) {
-      // Tiếp tục ghi
-      recordingProvider.resumeRecording();
-      setPausingState();
-      return;
-    }
-
     setState(() {
       isRecording = !isRecording;
       _timer = 0;
@@ -58,19 +50,22 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       onRecordEnd();
     }
   }
-  void setPausingState(){
+  void setPausingState() {
     final recordingProvider = context.read<CameraRecordingProvider>();
-    if (isRecording && !isPausing) {
-      print('asdasd');
-      // Tạm dừng ghi
-      recordingProvider.pauseRecording();
-      setPausingState();
-      return;
+
+    if (isRecording) {
+      if (!isPausing) {
+        recordingProvider.pauseRecording();
+      } else {
+        recordingProvider.resumeRecording();
+      }
+
+      setState(() {
+        isPausing = !isPausing;
+      });
     }
-    setState(() {
-      isPausing = !isPausing;
-    });
   }
+
   void startRecord(){
     context.read<AudioRecorderProvider>().startRecording();
   }

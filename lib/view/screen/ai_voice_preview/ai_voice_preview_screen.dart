@@ -48,7 +48,7 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Expanded(child: widget.isAudio ? FileVoice(key: _voiceKey,) : FileVideo(key: _videoKey)),
+            Expanded(child: widget.isAudio ? FileVoice(key: _voiceKey,) : FileVideo(key: _videoKey, videoPath: widget.videoPath,)),
             SizedBox(height: 40),
             _buildButtons(context),
             SizedBox(height: 20),
