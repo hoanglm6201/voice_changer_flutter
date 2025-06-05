@@ -9,6 +9,7 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/service/video_merge_helper.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart';
@@ -20,7 +21,8 @@ import 'package:voice_changer_flutter/view/widgets/dialog/download_dialog.dart';
 class ResultScreen extends StatefulWidget {
   final bool? isFromProcessing;
   final bool isVideo;
-  const ResultScreen({super.key, required this.isVideo, this.isFromProcessing = false});
+  final String? path;
+  const ResultScreen({super.key, required this.isVideo, this.isFromProcessing = false, this.path});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -69,7 +71,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       setState(() {
                         _isDownloaded = isDownloadSuccess;
                       });
-                  },)
+                  }, path: widget.path, isVideo: widget.isVideo,)
                 ),
               );
             },
@@ -77,13 +79,17 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icShare),
-            onPressed: () {},
+            onPressed: () {
+              ///SHARE
+            },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
           if(widget.isFromProcessing == true)
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icHomeResult),
-            onPressed: () {},
+            onPressed: () {
+              ///HOME
+            },
             style: IconButtonCustomStyle(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 11)),
           ),
         ],
@@ -91,7 +97,7 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Column(
         children: [
           ResSpacing.h14,
-          Expanded(child: widget.isVideo ? FileVideo() : FileVoice(),),
+          Expanded(child: widget.isVideo ? FileVideo(videoPath: widget.path,) : FileVoice(audioPath: widget.path,),),
           ResSpacing.h14,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),

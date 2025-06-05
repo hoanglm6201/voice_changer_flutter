@@ -13,7 +13,8 @@ import 'package:voice_changer_flutter/view/widgets/item/voices_item.dart';
 class ProcessingScreen extends StatefulWidget {
   final VoiceModel voiceModel;
   final bool isAudio;
-  const ProcessingScreen({super.key, required this.voiceModel, required this.isAudio});
+  final String? path;
+  const ProcessingScreen({super.key, required this.voiceModel, required this.isAudio, required this.path});
 
   @override
   State<ProcessingScreen> createState() => _ProcessingScreenState();
@@ -26,7 +27,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
 
     Future.delayed(Duration(seconds: 1), () {
       if (mounted) {
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => ResultScreen(isVideo: !widget.isAudio, isFromProcessing: true,),));
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => ResultScreen(isVideo: !widget.isAudio, isFromProcessing: true, path: widget.path),));
       }
     });
   }

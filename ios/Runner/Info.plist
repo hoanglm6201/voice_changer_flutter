@@ -50,6 +50,8 @@
 
     <key>NSCameraUsageDescription</key>
     <string>This app requires access to the camera to record videos.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Allow the app to save photos and videos to your device.</string>
 
 
 </dict>
