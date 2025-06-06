@@ -14,6 +14,7 @@ import 'package:voice_changer_flutter/view_model/camera_provider.dart';
 import 'package:voice_changer_flutter/view_model/camera_recording_provider.dart';
 import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:voice_changer_flutter/view_model/prank_sound_provider.dart';
 import 'package:voice_changer_flutter/view_model/purchase_provider.dart';
 
 void main() async {
@@ -32,6 +33,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CameraRecordingProvider()),
       ChangeNotifierProvider(create: (_) => AudioRecorderProvider()),
       ChangeNotifierProvider(create: (_) => CameraProvider()),
+      ChangeNotifierProvider(create: (_) => PrankSoundProvider()),
       ChangeNotifierProvider(create: (_) => purchaseProvider),
       ChangeNotifierProvider(create: (_) => adsProvider),
       ChangeNotifierProxyProvider2<AdsProvider, PurchaseProvider, AppStateProvider>(
