@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/prank_sound_model.dart';
+import 'package:voice_changer_flutter/view/screen/prank_sound/list_prank_item_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/item/prank_category_item.dart';
@@ -38,7 +40,12 @@ class PrankSoundScreen extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           final category = mockPrankSoundCategories[index];
-          return PrankCategoryItem(categoryModel: category,);
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => ListPrankItemScreen(categoryModel: category,)));
+            },
+            child: PrankCategoryItem(categoryModel: category,)
+          );
         },
       ),
     );

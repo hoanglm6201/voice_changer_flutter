@@ -4,7 +4,8 @@ import 'package:voice_changer_flutter/data/model/prank_sound_model.dart';
 
 class PrankSoundItem extends StatelessWidget {
   final PrankSound prankSoundModel;
-  const PrankSoundItem({super.key, required this.prankSoundModel});
+  final bool? isShadow;
+  const PrankSoundItem({super.key, required this.prankSoundModel, this.isShadow = true});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +14,12 @@ class PrankSoundItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 3, offset: Offset(0, 3))
+          isShadow == true ? BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 3, offset: Offset(0, 3))
+              :BoxShadow()
         ],
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(60),
-          topRight: Radius.circular(60),
+          topLeft: Radius.circular(100),
+          topRight: Radius.circular(100),
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
         )
