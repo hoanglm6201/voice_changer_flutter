@@ -5,16 +5,17 @@ import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/prank_sound_model.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
-import 'package:voice_changer_flutter/view/widgets/item/prank_category_item.dart';
+import 'package:voice_changer_flutter/view/widgets/item/prank_sound_item.dart';
 
-class PrankSoundScreen extends StatelessWidget {
-  const PrankSoundScreen({super.key});
+class ListPrankItemScreen extends StatelessWidget {
+  final PrankSoundCategory categoryModel;
+  const ListPrankItemScreen({super.key, required this.categoryModel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarCustom(
-        title:Text(context.locale.prank_sound, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        title:Text("${context.locale.list} ${categoryModel.title}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icBack),
           onPressed: () {
@@ -29,16 +30,15 @@ class PrankSoundScreen extends StatelessWidget {
       ),
       body: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-        itemCount: mockPrankSoundCategories.length,
+        itemCount: categoryModel.sounds.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.78,
-          crossAxisSpacing: 12
+            crossAxisCount: 3,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.78,
+            crossAxisSpacing: 12
         ),
         itemBuilder: (context, index) {
-          final category = mockPrankSoundCategories[index];
-          return PrankCategoryItem(categoryModel: category,);
+          return PrankSoundItem(prankSoundModel: categoryModel.sounds[index],);
         },
       ),
     );

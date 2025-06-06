@@ -12,68 +12,68 @@ class OptionList extends StatelessWidget {
   const OptionList({super.key});
 
   List<Map<String, dynamic>> options(BuildContext context) =>  [
-        {
-          'icon': ResImages.voiceChange,
-          'title': context.locale.voice_changer,
-          'onTap': () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => AiVoiceChangerScreen(voiceModel: voiceList.first, isAIVoiceChanger: false,),
-              ),
-            );
-          }
-        },
-        {
-          'icon': ResImages.textToAudio,
-          'title': context.locale.text_to_audio,
-          'onTap': () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => TextToAudioScreen(),
-              ),
-            );
-          }
-        },
-        {
-          'icon': ResImages.prankSound,
-          'title': context.locale.prank_sound,
-          'onTap': () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => PrankSoundScreen(),
-              ),
-            );
-          }
-        },
-        {
-          'icon': ResImages.prankReel,
-          'title': context.locale.prankReels,
-          'onTap': () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => TextToAudioScreen(),
-              ),
-            );
-          }
-        },
-        {
-          'icon': ResImages.pdfToAudio,
-          'title': context.locale.pdf_to_audio,
-          'onTap': () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => TextToAudioScreen(),
-              ),
-            );
-          }
-        },
+    {
+      'icon': ResImages.voiceChange,
+      'title': context.locale.voice_changer,
+      'onTap': () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => AiVoiceChangerScreen(voiceModel: voiceList.first, isAIVoiceChanger: false,),
+          ),
+        );
+      }
+    },
+    {
+      'icon': ResImages.textToAudio,
+      'title': context.locale.text_to_audio,
+      'onTap': () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TextToAudioScreen(),
+          ),
+        );
+      }
+    },
+    {
+      'icon': ResImages.prankSound,
+      'title': context.locale.prank_sound,
+      'onTap': () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => PrankSoundScreen(),
+          ),
+        );
+      }
+    },
+    {
+      'icon': ResImages.prankReel,
+      'title': context.locale.prankReels,
+      'onTap': () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TextToAudioScreen(),
+          ),
+        );
+      }
+    },
+    {
+      'icon': ResImages.pdfToAudio,
+      'title': context.locale.pdf_to_audio,
+      'onTap': () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TextToAudioScreen(),
+          ),
+        );
+      }
+    },
 
-      ];
+    ];
 
   @override
   Widget build(BuildContext context) {
