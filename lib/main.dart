@@ -16,6 +16,8 @@ import 'package:voice_changer_flutter/view_model/locale_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:voice_changer_flutter/view_model/prank_sound_provider.dart';
 import 'package:voice_changer_flutter/view_model/purchase_provider.dart';
+import 'package:voice_changer_flutter/view_model/rate_app_provider.dart';
+import 'package:voice_changer_flutter/view_model/voice_effect_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +36,10 @@ void main() async {
       ChangeNotifierProvider(create: (_) => AudioRecorderProvider()),
       ChangeNotifierProvider(create: (_) => CameraProvider()),
       ChangeNotifierProvider(create: (_) => PrankSoundProvider()),
+      ChangeNotifierProvider(create: (_) => VoiceEffectProvider()),
       ChangeNotifierProvider(create: (_) => purchaseProvider),
       ChangeNotifierProvider(create: (_) => adsProvider),
+      ChangeNotifierProvider(create: (_) => RateAppProvider()),
       ChangeNotifierProxyProvider2<AdsProvider, PurchaseProvider, AppStateProvider>(
         create: (_) => AppStateProvider(adsProvider, purchaseProvider),
         update: (_, ads, purchase, appState) {

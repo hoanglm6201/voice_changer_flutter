@@ -23,6 +23,7 @@ class ResultScreen extends StatefulWidget {
   final bool? isFromProcessing;
   final bool isVideo;
   final String? path;
+
   const ResultScreen({super.key, required this.isVideo, this.isFromProcessing = false, this.path});
 
   @override
@@ -67,12 +68,12 @@ class _ResultScreenState extends State<ResultScreen> {
               print('heheh');
               final status = await Permission.storage.request();
               print(status);
-              if (!status.isGranted) {
-                print("❌ Permission denied");
-                return;
-              }
+              // if (!status.isGranted) {
+              //   print("❌ Permission denied");
+              //   return;
+              // }
               print('object');
-              if (widget.path != null) {
+              // if (widget.path != null) {
                 await showDialog(
                   barrierDismissible: false,
                   context: context,
@@ -88,7 +89,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                 );
-              }
+              // }
             },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
@@ -99,14 +100,18 @@ class _ResultScreenState extends State<ResultScreen> {
             },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
-          if(widget.isFromProcessing == true)
-          IconButtonCustom(
-            icon: SvgPicture.asset(ResIcon.icHomeResult),
-            onPressed: () {
-              ///HOME
-            },
-            style: IconButtonCustomStyle(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 11)),
-          ),
+          if (widget.isFromProcessing == true)
+            IconButtonCustom(
+              icon: SvgPicture.asset(ResIcon.icHomeResult),
+              onPressed: () {
+                Navigator.popUntil(context, (route) {
+                  return route.isFirst;
+                });
+              },
+              style: IconButtonCustomStyle(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 11),
+              ),
+            ),
         ],
       ),
       body: Column(
@@ -164,14 +169,15 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           ResSpacing.h8,
           SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 25).copyWith(bottom: paddingBottom),
+            padding: EdgeInsets.symmetric(horizontal: 25)
+                .copyWith(bottom: paddingBottom),
             scrollDirection: Axis.horizontal,
             child: Row(
               spacing: 8,
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(
                 6,
-                    (index) {
+                (index) {
                   final VoiceModel voice = voiceList[index];
                   return Container(
                     width: width / 4 - 8,
@@ -195,9 +201,11 @@ class _ResultScreenState extends State<ResultScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 3.7, sigmaY: 3.7),
+                                filter:
+                                    ImageFilter.blur(sigmaX: 3.7, sigmaY: 3.7),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 8),
                                   color: Colors.black.withValues(alpha: 0.1),
                                   child: Center(
                                     child: Text(

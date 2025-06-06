@@ -38,4 +38,6 @@ class ResIcon {
   static const String icDownload = '${_basePath}ic_download.svg';
   static const String icDownloadSuccess = '${_basePath}ic_download_success.svg';
   static const String icVolume = '${_basePath}ic_volume.svg';
+  static const String icSoundEffect = '${_basePath}ic_sound_effect.svg';
+  static const String icToolTip = '${_basePath}ic_tooltip.svg';
 }

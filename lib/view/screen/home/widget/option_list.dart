@@ -7,6 +7,7 @@ import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_changer_screen.dart';
 import 'package:voice_changer_flutter/view/screen/prank_sound/prank_sound_screen.dart';
 import 'package:voice_changer_flutter/view/screen/text_to_audio/text_to_audio_screen.dart';
+import 'package:voice_changer_flutter/view/screen/voice_effect/voice_effect_screen.dart';
 
 class OptionList extends StatelessWidget {
   const OptionList({super.key});

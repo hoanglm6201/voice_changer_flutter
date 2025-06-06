@@ -7,6 +7,7 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/home/home_screen.dart';
 import 'package:voice_changer_flutter/view/screen/library/library_screen.dart';
+import 'package:voice_changer_flutter/view/screen/setting/setting_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
@@ -21,8 +22,8 @@ class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
 
   final List<Widget Function()> _screenBuilders = [
-        () => const HomeScreen(),
-        () => const LibraryScreen(),
+    () => const HomeScreen(),
+    () => const LibraryScreen(),
   ];
 
   late final List<Widget?> _screens = List.filled(_screenBuilders.length, null);
@@ -34,7 +35,6 @@ class _MainViewState extends State<MainView> {
 
     return _screens[index]!;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,14 @@ class _MainViewState extends State<MainView> {
         actions: [
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icSetting),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => SettingScreen(),
+                ),
+              );
+            },
             style: const IconButtonCustomStyle(
               backgroundColor: Colors.white,
               borderRadius: 15,
@@ -65,7 +72,8 @@ class _MainViewState extends State<MainView> {
       body: IndexedStack(
         index: _selectedIndex,
         children: List.generate(_screenBuilders.length, (index) {
-          return _screens[index] ?? const Center(child: CupertinoActivityIndicator());
+          return _screens[index] ??
+              const Center(child: CupertinoActivityIndicator());
         }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -80,8 +88,9 @@ class _MainViewState extends State<MainView> {
             height: 70,
             width: 70,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: AssetImage(ResImages.bgGradient), fit: BoxFit.cover),
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: AssetImage(ResImages.bgGradient), fit: BoxFit.cover),
                 boxShadow: [
                   BoxShadow(
                     color: Color.fromRGBO(97, 62, 234, 0.3),
@@ -89,8 +98,7 @@ class _MainViewState extends State<MainView> {
                     spreadRadius: 1,
                     offset: Offset(0, 3),
                   ),
-                ]
-            ),
+                ]),
             child: Center(
               child: SvgPicture.asset(
                 ResIcon.icMic,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ResColors {
@@ -11,6 +13,9 @@ class ResColors {
     colors: [lightPinkPurple, deepViolet],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    transform: GradientRotation(
+      pi / 5,
+    ),
   );
 
   static const Color textColor = Color(0xFF4E4E4E);
