@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:voice_changer_flutter/core/res/anims.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
@@ -20,22 +21,77 @@ class TextToAudioScreen extends StatefulWidget {
   State<TextToAudioScreen> createState() => _TextToAudioScreenState();
 }
 
-class _TextToAudioScreenState extends State<TextToAudioScreen> {
+class _TextToAudioScreenState extends State<TextToAudioScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController = TextEditingController();
   final LoadingDialog _loadingDialog = LoadingDialog(
     animLoading: ResAnim.animLoading,
-    onCompleted: () {
-
-    },
+    onCompleted: () {},
   );
+  late AnimationController _shakeController;
+  late Animation<double> _shakeAnimation;
+  bool _showTooltip = false;
+  final GlobalKey _textFieldKey = GlobalKey();
 
   double _speechValue = 50;
   double _pitchValue = 50;
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize shake animation
+    _shakeController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _shakeAnimation = Tween<double>(begin: 0, end: 10)
+        .chain(CurveTween(curve: Curves.elasticIn))
+        .animate(_shakeController)
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _shakeController.reset();
+        }
+      });
+  }
+
+  @override
+  void dispose() {
+    _shakeController.dispose();
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  void _onTapContinue() {
+    if (_textEditingController.text.isEmpty) {
+      _shakeController.forward();
+      _showTooltipIfNeeded();
+    } else {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => VoiceEffectScreen(),
+        ),
+      );
+    }
+  }
+
+  void _showTooltipIfNeeded() {
+    if (_textEditingController.text.isEmpty) {
+      setState(() {
+        _showTooltip = true;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final double paddingBottom = MediaQuery.of(context).padding.bottom == 0 ? 20 : MediaQuery.of(context).padding.bottom;
+    final double paddingBottom = MediaQuery.of(context).padding.bottom == 0
+        ? 20
+        : MediaQuery.of(context).padding.bottom;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -67,81 +123,97 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                             top: 60,
                             left: 24,
                             right: 24,
-                            child: Container(
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextField(
-                                    controller: _textEditingController,
-                                    onChanged: (value) {
-                                      setState(() {});
-                                    },
-                                    maxLength: 1000,
-                                    buildCounter: (context, {required currentLength, required isFocused, required maxLength}) =>
-                                        SizedBox.shrink(),
-                                    maxLines: 8,
-                                    style: TextStyle(
-                                      color: ResColors.textColor,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
+                            child: Transform.translate(
+                              offset: Offset(_shakeAnimation.value, 0),
+                              child: Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 2),
                                     ),
-                                    cursorHeight: 14,
-                                    cursorColor: ResColors.textColor,
-                                    decoration: InputDecoration(
-                                      hintText: context.locale.place_holder_text_to_audio,
-                                      hintStyle: TextStyle(
-                                        color: ResColors.colorGray,
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      key: _textFieldKey,
+                                      controller: _textEditingController,
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
+                                      onTap: () {
+                                        setState(() {
+                                          _showTooltip = false;
+                                        });
+                                      },
+                                      maxLength: 1000,
+                                      buildCounter: (context, {required currentLength, required isFocused, required maxLength}) => SizedBox.shrink(),
+                                      maxLines: 8,
+                                      style: TextStyle(
+                                        color: ResColors.textColor,
                                         fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                       ),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(18),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                    color: ResColors.colorGray.withValues(alpha: 0.1),
-                                  ),
-                                  ResSpacing.h10,
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "${_textEditingController.text.length}/1000",
-                                          style: TextStyle(
-                                            color: ResColors.colorGray,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                          ),
+                                      cursorHeight: 14,
+                                      cursorColor: ResColors.textColor,
+                                      decoration: InputDecoration(
+                                        hintText: context.locale
+                                            .place_holder_text_to_audio,
+                                        hintStyle: TextStyle(
+                                          color: ResColors.colorGray,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
                                         ),
-                                        InkWell(
-                                          onTap: () {
-                                            // Audio text has been imported
-                                          },
-                                          child: SvgPicture.asset(
-                                            ResIcon.icVolume,
-                                          ),
-                                        ),
-                                      ],
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(18),
+                                      ),
                                     ),
-                                  ),
-                                  ResSpacing.h14,
-                                ],
+                                    Divider(
+                                      height: 1,
+                                      thickness: 1,
+                                      color: ResColors.colorGray
+                                          .withValues(alpha: 0.1),
+                                    ),
+                                    ResSpacing.h10,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${_textEditingController.text.length}/1000",
+                                            style: TextStyle(
+                                              color: ResColors.colorGray,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              if(_textEditingController.text.isEmpty) {
+                                                _showTooltipIfNeeded();
+                                              } else {
+                                                print("Play audio: ${_textEditingController.text}");
+                                              }
+                                            },
+                                            child: SvgPicture.asset(
+                                              ResIcon.icVolume,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ResSpacing.h14,
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -150,7 +222,8 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                             left: 0,
                             right: 24,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25.0),
                               child: Text(
                                 context.locale.setting,
                                 style: TextStyle(
@@ -166,10 +239,12 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                             left: 24,
                             right: 24,
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 26, vertical: 18),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 26, vertical: 18),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(15).copyWith(topLeft: Radius.circular(5)),
+                                borderRadius: BorderRadius.circular(15)
+                                    .copyWith(topLeft: Radius.circular(5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black12,
@@ -183,11 +258,14 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                                   sliderTheme: SliderThemeData(
                                     trackHeight: 4.0,
                                     activeTrackColor: ResColors.colorPurple,
-                                    inactiveTrackColor: ResColors.colorGray.withValues(alpha: 0.2),
+                                    inactiveTrackColor: ResColors.colorGray
+                                        .withValues(alpha: 0.2),
                                     thumbColor: ResColors.colorPurple,
-                                    overlayColor: ResColors.colorPurple.withValues(alpha: 0.2),
+                                    overlayColor: ResColors.colorPurple
+                                        .withValues(alpha: 0.2),
                                     thumbShape: AppSliderShape(thumbRadius: 10),
-                                    overlayShape: AppSliderOverlayShape(overlayRadius: 20),
+                                    overlayShape: AppSliderOverlayShape(
+                                        overlayRadius: 20),
                                   ),
                                 ),
                                 child: Column(
@@ -217,14 +295,16 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                                             min: 0,
                                             max: 100,
                                             divisions: 100,
-                                            label: _speechValue.round().toString(),
+                                            label:
+                                                _speechValue.round().toString(),
                                             onChanged: (value) {
                                               setState(() {
                                                 _speechValue = value;
                                               });
                                             },
                                             activeColor: ResColors.colorPurple,
-                                            inactiveColor: ResColors.colorGray.withValues(alpha: 0.2),
+                                            inactiveColor: ResColors.colorGray
+                                                .withValues(alpha: 0.2),
                                           ),
                                         ),
                                         Text(
@@ -262,14 +342,16 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                                             min: 0,
                                             max: 100,
                                             divisions: 100,
-                                            label: _pitchValue.round().toString(),
+                                            label:
+                                                _pitchValue.round().toString(),
                                             onChanged: (value) {
                                               setState(() {
                                                 _pitchValue = value;
                                               });
                                             },
                                             activeColor: ResColors.colorPurple,
-                                            inactiveColor: ResColors.colorGray.withValues(alpha: 0.2),
+                                            inactiveColor: ResColors.colorGray
+                                                .withValues(alpha: 0.2),
                                           ),
                                         ),
                                         Text(
@@ -297,6 +379,42 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
                               },
                             ),
                           ),
+                          if (_showTooltip) ...[
+                            Positioned(
+                              top: 30,
+                              right: 100,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 20,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  context.locale.message_tooltip_error_empty_text_field,
+                                  style: TextStyle(
+                                    color: ResColors.textColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 55,
+                              right: 110,
+                              child: SvgPicture.asset(ResIcon.icToolTip),
+                            ),
+                          ]
                         ],
                       ),
                     ),
@@ -307,22 +425,12 @@ class _TextToAudioScreenState extends State<TextToAudioScreen> {
             GradientButton(
               height: kBottomNavigationBarHeight / 1.2,
               width: width,
-              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20).copyWith(bottom: paddingBottom),
+              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20)
+                  .copyWith(bottom: paddingBottom),
               style: GradientButtonStyle(
                 borderRadius: BorderRadius.circular(15),
               ),
-              onTap: () {
-                _loadingDialog.show(context);
-                Future.delayed(Duration(seconds: 2), () {
-                  _loadingDialog.dismiss();
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => VoiceEffectScreen(),
-                    ),
-                  );
-                });
-              },
+              onTap: _onTapContinue,
               child: Center(
                 child: Text(
                   context.locale.continue_action,
@@ -353,19 +461,19 @@ class AppSliderShape extends SliderComponentShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset center, {
-        required Animation<double> activationAnimation,
-        required Animation<double> enableAnimation,
-        required bool isDiscrete,
-        required TextPainter labelPainter,
-        required RenderBox parentBox,
-        required SliderThemeData sliderTheme,
-        required TextDirection textDirection,
-        required double value,
-        required double textScaleFactor,
-        required Size sizeWithOverflow,
-      }) {
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
@@ -396,30 +504,34 @@ class AppSliderOverlayShape extends SliderComponentShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset center, {
-        required Animation<double> activationAnimation,
-        required Animation<double> enableAnimation,
-        required bool isDiscrete,
-        required TextPainter labelPainter,
-        required RenderBox parentBox,
-        required SliderThemeData sliderTheme,
-        required TextDirection textDirection,
-        required double value,
-        required double textScaleFactor,
-        required Size sizeWithOverflow,
-      }) {
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
       ..style = PaintingStyle.fill
-      ..color = (sliderTheme.overlayColor ?? Colors.transparent).withValues(alpha: activationAnimation.value * 0.4);
+      ..color = (sliderTheme.overlayColor ?? Colors.transparent)
+          .withValues(alpha: activationAnimation.value * 0.4);
 
     const cornerRadius = 8.0;
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(center: center, width: overlayRadius * 1.2, height: overlayRadius * 1.2),
+        Rect.fromCenter(
+            center: center,
+            width: overlayRadius * 1.2,
+            height: overlayRadius * 1.2),
         Radius.circular(cornerRadius),
       ),
       paint,

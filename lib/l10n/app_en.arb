@@ -98,5 +98,6 @@
   "send": "Send",
   "enjoy_app": "Enjoy Phone Cleaner?",
   "tap_a_star_to_rate_on_app_store": "Tap a star to rate it on the App Store.",
-  "submit": "Submit"
+  "submit": "Submit",
+  "message_tooltip_error_empty_text_field": "Text input is required to proceed."
 }
