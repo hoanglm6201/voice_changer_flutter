@@ -35,6 +35,11 @@ class ResImages {
   static const String vinyl = '${_basePath}img_vinyl.png';
   static const String ambientSound = '${_basePath}img_ambient_sound.png';
   static const String changeVoice = '${_basePath}img_change_voice.png';
+  static const String iconSetting = '${_basePath}img_icon_setting.png';
+  static const String iconShare = '${_basePath}img_icon_share.png';
+  static const String iconRate = '${_basePath}img_icon_rate.png';
+  static const String iconPolicy = '${_basePath}img_icon_policy.png';
+  static const String iconTermsOfUser = '${_basePath}img_icon_terms_of_user.png';
 
   // Cartoon images
   static const String daffiDuck = '${_cartoonPath}Daffi Duck.jpg';
