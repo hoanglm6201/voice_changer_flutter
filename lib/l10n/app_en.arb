@@ -11,6 +11,8 @@
   "continue_action": "Continue",
   "volume": "Volume",
   "off": "Off",
+  "loop": "Loop",
+  "timer": "Timer",
   "preview": "Preview",
   "stay_here": "Stay Here",
   "downloading": "Downloading...",
