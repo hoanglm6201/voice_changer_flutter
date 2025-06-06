@@ -2,12 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
+import 'package:voice_changer_flutter/service/video_merge_helper.dart';
 import 'package:voice_changer_flutter/view/widgets/progress_bar/gradient_progress_bar.dart';
 
-class DownloadDialog extends StatelessWidget {
+class DownloadDialog extends StatefulWidget {
   final Function(bool isDownloadSuccess) onDownloadSuccess;
-  const DownloadDialog({super.key, required this.onDownloadSuccess});
+  final String? path;
+  final bool isVideo;
+  const DownloadDialog({super.key, required this.onDownloadSuccess, required this.path, required this.isVideo});
 
+  @override
+  State<DownloadDialog> createState() => _DownloadDialogState();
+}
+
+class _DownloadDialogState extends State<DownloadDialog> {
+  double _progress = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startSaving();
+  }
+
+  void _startSaving() async {
+    await Future.delayed(Duration(milliseconds: 300)); // Cho phép dialog hiện lên
+    await VideoMergerHelper.saveToGallery(widget.path ?? '', widget.isVideo);
+
+    // Đợi 1 chút để hoàn thiện animation
+    await Future.delayed(Duration(milliseconds: 500));
+
+    widget.onDownloadSuccess(true);
+    if (mounted) Navigator.pop(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +60,7 @@ class DownloadDialog extends StatelessWidget {
                 );
               },
               onEnd: () {
-                onDownloadSuccess(true);
+                widget.onDownloadSuccess(true);
                 Navigator.pop(context);
               },
             ),

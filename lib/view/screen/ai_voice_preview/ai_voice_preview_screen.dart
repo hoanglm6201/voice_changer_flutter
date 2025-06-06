@@ -110,7 +110,7 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
                   _voiceKey.currentState?.pauseAudio();
                 }
                 await Future.delayed(Duration(milliseconds: 200));
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: widget.voiceModel, isAudio: widget.isAudio,)));
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: widget.voiceModel, isAudio: widget.isAudio, path: widget.path,)));
               },
               child: Container(
                 width: double.infinity,

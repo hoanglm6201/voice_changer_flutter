@@ -3,12 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/data/model/voice_model.dart';
+import 'package:voice_changer_flutter/service/video_merge_helper.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart';
@@ -20,9 +22,9 @@ import 'package:voice_changer_flutter/view/widgets/dialog/download_dialog.dart';
 class ResultScreen extends StatefulWidget {
   final bool? isFromProcessing;
   final bool isVideo;
+  final String? path;
 
-  const ResultScreen(
-      {super.key, required this.isVideo, this.isFromProcessing = false});
+  const ResultScreen({super.key, required this.isVideo, this.isFromProcessing = false, this.path});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -44,44 +46,58 @@ class _ResultScreenState extends State<ResultScreen> {
           icon: SvgPicture.asset(ResIcon.icBack),
         ),
         actions: [
-          if (widget.isFromProcessing == false)
-            IconButtonCustom(
-              icon: SvgPicture.asset(ResIcon.icDelete),
-              onPressed: () {
-                final ConfirmDialog confirmDialog = ConfirmDialog(
-                  imageHeader: ResImages.deleteHeader,
-                  title: context.locale.delete,
-                  content: context.locale.sub_delete,
-                  textCancel: context.locale.keep_it,
-                  textAccept: context.locale.delete,
-                );
-                confirmDialog.show(context);
-              },
-              style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
-            ),
-          if (widget.isFromProcessing == true)
-            IconButtonCustom(
-              icon: SvgPicture.asset(_isDownloaded
-                  ? ResIcon.icDownloadSuccess
-                  : ResIcon.icDownload),
-              onPressed: () async {
+          if(widget.isFromProcessing == false)
+          IconButtonCustom(
+            icon: SvgPicture.asset(ResIcon.icDelete),
+            onPressed: () {
+              final ConfirmDialog confirmDialog = ConfirmDialog(
+                imageHeader: ResImages.deleteHeader,
+                title: context.locale.delete,
+                content: context.locale.sub_delete,
+                textCancel: context.locale.keep_it,
+                textAccept: context.locale.delete,
+              );
+              confirmDialog.show(context);
+            },
+            style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
+          ),
+          if(widget.isFromProcessing == true)
+          IconButtonCustom(
+            icon: SvgPicture.asset(_isDownloaded ? ResIcon.icDownloadSuccess : ResIcon.icDownload),
+            onPressed: () async {
+              print('heheh');
+              final status = await Permission.storage.request();
+              print(status);
+              // if (!status.isGranted) {
+              //   print("❌ Permission denied");
+              //   return;
+              // }
+              print('object');
+              // if (widget.path != null) {
                 await showDialog(
                   barrierDismissible: false,
                   context: context,
-                  builder: (context) => Dialog(child: DownloadDialog(
-                    onDownloadSuccess: (bool isDownloadSuccess) {
-                      setState(() {
-                        _isDownloaded = isDownloadSuccess;
-                      });
-                    },
-                  )),
+                  builder: (context) => Dialog(
+                    child: DownloadDialog(
+                      onDownloadSuccess: (bool isDownloadSuccess) {
+                        setState(() {
+                          _isDownloaded = isDownloadSuccess;
+                        });
+                      },
+                      path: widget.path,
+                      isVideo: widget.isVideo,
+                    ),
+                  ),
                 );
-              },
-              style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
-            ),
+              // }
+            },
+            style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
+          ),
           IconButtonCustom(
             icon: SvgPicture.asset(ResIcon.icShare),
-            onPressed: () {},
+            onPressed: () {
+              ///SHARE
+            },
             style: IconButtonCustomStyle(padding: EdgeInsets.all(8)),
           ),
           if (widget.isFromProcessing == true)
@@ -101,9 +117,7 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Column(
         children: [
           ResSpacing.h14,
-          Expanded(
-            child: widget.isVideo ? FileVideo() : FileVoice(),
-          ),
+          Expanded(child: widget.isVideo ? FileVideo(videoPath: widget.path,) : FileVoice(audioPath: widget.path,),),
           ResSpacing.h14,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),

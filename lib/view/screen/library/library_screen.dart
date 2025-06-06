@@ -72,7 +72,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => ResultScreen(isVideo: true,),
+                      builder: (context) => ResultScreen(isVideo: false),
                     ),
                   );
                 },
