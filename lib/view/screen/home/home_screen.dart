@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:voice_changer_flutter/core/res/font.dart';
-import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
-import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_changer/ai_voice_list_screen.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/banner_home.dart';
 import 'package:voice_changer_flutter/view/screen/home/widget/header_welcome.dart';

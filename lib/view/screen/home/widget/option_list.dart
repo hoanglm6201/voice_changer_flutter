@@ -4,6 +4,7 @@ import 'package:voice_changer_flutter/core/res/images.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
 import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 import 'package:voice_changer_flutter/view/screen/text_to_audio/text_to_audio_screen.dart';
+import 'package:voice_changer_flutter/view/screen/voice_effect/voice_effect_screen.dart';
 
 class OptionList extends StatelessWidget {
   const OptionList({super.key});
