@@ -107,16 +107,17 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
             child: GestureDetector(
               onTap: () async {
                 /// NẾU KHÔNG PHẢI LÀ AIVOICHANGER THÌ NAVIGATE QUA VOICECHANGER
-                if(!widget.isAIVoiceChanger){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => VoiceEffectScreen()));
-                  return;
-                }
+
                 if (!widget.isAudio) {
                   _videoKey.currentState?.pauseVideo();
                 }else{
                   _voiceKey.currentState?.pauseAudio();
                 }
                 await Future.delayed(Duration(milliseconds: 200));
+                if(!widget.isAIVoiceChanger){
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => VoiceEffectScreen()));
+                  return;
+                }
                 Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: widget.voiceModel, isAudio: widget.isAudio, path: widget.path,)));
               },
               child: Container(
