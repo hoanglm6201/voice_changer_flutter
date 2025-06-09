@@ -67,30 +67,9 @@ flutter:
   fonts:
     - family: SFCompactDisplay
       fonts:
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Black.otf
-          weight: 900
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Bold.otf
-          weight: 700
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Heavy.otf
-          weight: 800
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Light.otf
-          weight: 300
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Medium.otf
-          weight: 500
         - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Regular.otf
-          weight: 400
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Semibold.otf
-          weight: 600
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Thin.otf
-          weight: 100
-        - asset: assets/fonts/sf_compact_display/SF-Compact-Display-Ultralight.otf
-          weight: 200
+
 
     - family: Belanosima
       fonts:
         - asset: assets/fonts/belanosima/Belanosima-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/belanosima/Belanosima-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/belanosima/Belanosima-Bold.ttf
-          weight: 700
