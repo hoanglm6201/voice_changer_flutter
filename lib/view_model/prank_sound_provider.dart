@@ -18,26 +18,65 @@ class PrankSoundProvider with ChangeNotifier {
   double _volume = 1;
   double get volume => _volume;
 
+  bool _isTimerSet = false;
+  bool get isTimerSet => _isTimerSet;
+
   String _timerLabel = 'Off';
   String get timerLabel => _timerLabel;
 
   Duration _selectedDuration = Duration.zero;
 
+  bool _isLoop = false;
+  bool get isLoop => _isLoop;
+
+  set isLoop(bool value) {
+    _isLoop = value;
+    if (_isLoop) {
+      _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    } else {
+      _audioPlayer.setReleaseMode(ReleaseMode.release);
+    }
+    notifyListeners();
+  }
+
+
+  PrankSoundProvider() {
+    _audioPlayer.onPlayerComplete.listen((event) {
+      print(_isLoop);
+      if (_isLoop) {
+        _audioPlayer.seek(Duration.zero);
+        _audioPlayer.resume();
+      } else {
+        _isPlaying = false;
+        notifyListeners();
+      }
+    });
+  }
+
   // ========== Audio ==========
   Future<void> play(String path, {bool isAsset = false}) async {
     try {
       await _audioPlayer.setVolume(_volume);
+
+      if (_isLoop) {
+        await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+      } else {
+        await _audioPlayer.setReleaseMode(ReleaseMode.release);
+      }
+
       if (isAsset) {
         await _audioPlayer.play(AssetSource(path));
       } else {
         await _audioPlayer.play(UrlSource(path));
       }
+
       _isPlaying = true;
       notifyListeners();
     } catch (e) {
       debugPrint('Play error: $e');
     }
   }
+
 
 
   Future<void> pause() async {
@@ -65,22 +104,29 @@ class PrankSoundProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void startCountdown() {
+  Future<void> startCountdown() async {
     print('start');
-    if (_selectedDuration == Duration.zero) return;
 
-    _countdown = _selectedDuration.inSeconds;
+    if (_selectedDuration == Duration.zero) {
+      await play('audio_test.mp3', isAsset: true);
+      return;
+    }
+    _isTimerSet = true;
+    _countdown = _selectedDuration.inSeconds + 1;
     _countdownTimer?.cancel();
 
-    _countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+
+    _countdownTimer = Timer.periodic(Duration(seconds: 1), (timer)  async {
+      print(_countdown);
       if (_countdown > 0) {
         _countdown--;
-        notifyListeners();
       } else {
         timer.cancel();
         debugPrint('Countdown finished');
-        play('audio_test.mp3', isAsset: true);
+        await play('audio_test.mp3', isAsset: true);
+        _isTimerSet = false;
       }
+      notifyListeners();
     });
   }
 
@@ -114,6 +160,17 @@ class PrankSoundProvider with ChangeNotifier {
     }
   }
 
+  void reset() {
+    print('reset');
+    _audioPlayer.stop();
+    _countdownTimer?.cancel();
+    _countdown = 0;
+    _isPlaying = false;
+    _isTimerSet = false;
+    _timerLabel = 'Off';
+    _selectedDuration = Duration.zero;
+    notifyListeners();
+  }
 
   @override
   void dispose() {

@@ -13,6 +13,8 @@
   "off": "Off",
   "loop": "Loop",
   "timer": "Timer",
+  "stop": "Stop",
+  "sound_will_auto_play_after": "Sound will auto play after:",
   "preview": "Preview",
   "stay_here": "Stay Here",
   "downloading": "Downloading...",

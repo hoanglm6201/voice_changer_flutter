@@ -14,7 +14,6 @@ class LoopTimerCard extends StatefulWidget {
 }
 
 class _LoopTimerCardState extends State<LoopTimerCard> {
-  bool isLoop = true;
   String timerValue = 'Off';
 
   @override
@@ -49,19 +48,21 @@ class _LoopTimerCardState extends State<LoopTimerCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(context.locale.loop, style: TextStyle(fontSize: 13)),
-              Transform.scale(
-                scale: 0.75,
-                child: Switch.adaptive(
-                  value: isLoop,
-                  onChanged: (value) {
-                    setState(() {
-                      isLoop = value;
-                    });
-                  },
-                  activeColor: ResColors.colorPurple,
-                  thumbColor: WidgetStateProperty.all(isLoop ? ResColors.colorPurple : Color(0xffB6BDC5)),
-                  activeTrackColor: ResColors.colorPurple.withValues(alpha: 0.3),
-                ),
+              Consumer<PrankSoundProvider>(
+                builder: (BuildContext context, PrankSoundProvider provider, Widget? child) {
+                  return Transform.scale(
+                    scale: 0.75,
+                    child: Switch.adaptive(
+                      value: provider.isLoop,
+                      onChanged: (value) {
+                        provider.isLoop = value;
+                      },
+                      activeColor: ResColors.colorPurple,
+                      thumbColor: WidgetStateProperty.all(provider.isLoop ? ResColors.colorPurple : Color(0xffB6BDC5)),
+                      activeTrackColor: ResColors.colorPurple.withValues(alpha: 0.3),
+                    ),
+                  );
+                },
               ),
             ],
           ),
