@@ -4,10 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
 import 'package:voice_changer_flutter/core/res/spacing.dart';
+import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
 class HeaderVoiceEffect extends StatefulWidget {
-  const HeaderVoiceEffect({super.key});
+  final bool? isAudio;
+  const HeaderVoiceEffect({super.key, this.isAudio = true});
 
   @override
   State<HeaderVoiceEffect> createState() => _HeaderVoiceEffectState();
@@ -122,7 +124,7 @@ class _HeaderVoiceEffectState extends State<HeaderVoiceEffect> {
                 shape: BoxShape.circle,
               ),
             ),
-            IconButtonCustom(
+            widget.isAudio == true ? IconButtonCustom(
               icon: SvgPicture.asset(
                 _isPlaying ? ResIcon.icPause : ResIcon.icPlayCircle,
                 width: 44,
@@ -133,9 +135,9 @@ class _HeaderVoiceEffectState extends State<HeaderVoiceEffect> {
               },
               style: const IconButtonCustomStyle(
                 backgroundColor: Color.fromRGBO(182, 189, 197, 0.2),
-                padding: EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(34.0),
               ),
-            ),
+            ) : FileVideo(),
             IconButtonCustom(
               icon: SvgPicture.asset(
                 ResIcon.icShare,

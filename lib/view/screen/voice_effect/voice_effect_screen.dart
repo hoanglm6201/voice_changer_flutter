@@ -13,9 +13,16 @@ import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 import 'package:voice_changer_flutter/view/widgets/dialog/confirm_dialog.dart';
 
-class VoiceEffectScreen extends StatelessWidget {
-  const VoiceEffectScreen({super.key});
+class VoiceEffectScreen extends StatefulWidget {
+  final bool? isFromVoiceChanger;
+  final bool? isAudio;
+  const VoiceEffectScreen({super.key, this.isFromVoiceChanger = false, this.isAudio = true});
 
+  @override
+  State<VoiceEffectScreen> createState() => _VoiceEffectScreenState();
+}
+
+class _VoiceEffectScreenState extends State<VoiceEffectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +63,7 @@ class VoiceEffectScreen extends StatelessWidget {
         child: Column(
           children: [
             ResSpacing.h12,
-            HeaderVoiceEffect(),
+            HeaderVoiceEffect(isAudio: widget.isAudio,),
             ResSpacing.h24,
             OptionsEffectWidget(),
           ],

@@ -115,7 +115,7 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
                 }
                 await Future.delayed(Duration(milliseconds: 200));
                 if(!widget.isAIVoiceChanger){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => VoiceEffectScreen()));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => VoiceEffectScreen(isAudio: widget.isAudio,)));
                   return;
                 }
                 Navigator.push(context, CupertinoPageRoute(builder: (context) => ProcessingScreen(voiceModel: widget.voiceModel, isAudio: widget.isAudio, path: widget.path,)));
@@ -147,78 +147,6 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget _buildSeeMoreList(BuildContext context){
-    final width = MediaQuery.of(context).size.width - 50;
-    final paddingBottom = MediaQuery.of(context).padding.bottom;
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 25).copyWith(bottom: paddingBottom),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        spacing: 8,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(
-          6,
-              (index) {
-            final VoiceModel voice = voiceList[index];
-            return Container(
-              width: width / 4 - 8,
-              height: (width / 4 - 8) * 1.2,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(voice.image),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 3.7, sigmaY: 3.7),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                            color: Colors.black.withValues(alpha: 0.1),
-                            child: Center(
-                              child: Text(
-                                voice.name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 4,
-                                      color: Colors.black45,
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
       ),
     );
   }
