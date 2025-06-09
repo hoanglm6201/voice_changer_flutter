@@ -137,7 +137,10 @@ class _HeaderVoiceEffectState extends State<HeaderVoiceEffect> {
                 backgroundColor: Color.fromRGBO(182, 189, 197, 0.2),
                 padding: EdgeInsets.all(34.0),
               ),
-            ) : FileVideo(),
+            ) : SizedBox(
+                height: 280,
+                width: 200,
+                child: FileVideo()),
             IconButtonCustom(
               icon: SvgPicture.asset(
                 ResIcon.icShare,
