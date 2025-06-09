@@ -5,7 +5,13 @@ import 'package:voice_changer_flutter/data/model/prank_sound_model.dart';
 class PrankSoundItem extends StatelessWidget {
   final PrankSound prankSoundModel;
   final bool? isShadow;
-  const PrankSoundItem({super.key, required this.prankSoundModel, this.isShadow = true});
+  final bool isCenter;
+  const PrankSoundItem({
+    super.key, 
+    required this.prankSoundModel, 
+    this.isShadow = true,
+    this.isCenter = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +31,7 @@ class PrankSoundItem extends StatelessWidget {
         )
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Container(
@@ -34,7 +41,7 @@ class PrankSoundItem extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          Container(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               prankSoundModel.name,
@@ -42,7 +49,10 @@ class PrankSoundItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+                color: Colors.black, 
+                fontSize: 14, 
+                fontWeight: FontWeight.w500
+              ),
             ),
           ),
         ],

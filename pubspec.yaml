@@ -42,6 +42,7 @@ dependencies:
   carousel_slider_plus: ^7.1.1
   share_plus: ^11.0.0
   super_tooltip: ^2.0.9
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
