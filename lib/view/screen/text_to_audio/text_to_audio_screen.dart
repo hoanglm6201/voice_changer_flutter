@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:super_tooltip/super_tooltip.dart';
 import 'package:voice_changer_flutter/core/res/anims.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
@@ -164,8 +163,7 @@ class _TextToAudioScreenState extends State<TextToAudioScreen>
                                       cursorHeight: 14,
                                       cursorColor: ResColors.textColor,
                                       decoration: InputDecoration(
-                                        hintText: context.locale
-                                            .place_holder_text_to_audio,
+                                        hintText: context.locale.place_holder_text_to_audio,
                                         hintStyle: TextStyle(
                                           color: ResColors.colorGray,
                                           fontSize: 13,
@@ -178,8 +176,7 @@ class _TextToAudioScreenState extends State<TextToAudioScreen>
                                     Divider(
                                       height: 1,
                                       thickness: 1,
-                                      color: ResColors.colorGray
-                                          .withValues(alpha: 0.1),
+                                      color: ResColors.colorGray.withValues(alpha: 0.1),
                                     ),
                                     ResSpacing.h10,
                                     Padding(
@@ -239,12 +236,10 @@ class _TextToAudioScreenState extends State<TextToAudioScreen>
                             left: 24,
                             right: 24,
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 26, vertical: 18),
+                              padding: EdgeInsets.symmetric(horizontal: 26, vertical: 18),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(15)
-                                    .copyWith(topLeft: Radius.circular(5)),
+                                borderRadius: BorderRadius.circular(15).copyWith(topLeft: Radius.circular(5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black12,
@@ -258,14 +253,11 @@ class _TextToAudioScreenState extends State<TextToAudioScreen>
                                   sliderTheme: SliderThemeData(
                                     trackHeight: 4.0,
                                     activeTrackColor: ResColors.colorPurple,
-                                    inactiveTrackColor: ResColors.colorGray
-                                        .withValues(alpha: 0.2),
+                                    inactiveTrackColor: ResColors.colorGray.withValues(alpha: 0.2),
                                     thumbColor: ResColors.colorPurple,
-                                    overlayColor: ResColors.colorPurple
-                                        .withValues(alpha: 0.2),
+                                    overlayColor: ResColors.colorPurple.withValues(alpha: 0.2),
                                     thumbShape: AppSliderShape(thumbRadius: 10),
-                                    overlayShape: AppSliderOverlayShape(
-                                        overlayRadius: 20),
+                                    overlayShape: AppSliderOverlayShape(overlayRadius: 20),
                                   ),
                                 ),
                                 child: Column(

@@ -11,4 +11,5 @@ class SharePreferencesKey {
   static const isFirstOpenShow = "isFirstOpenShow";
   static const timeOpenApp = "timeOpenApp";
   static const timeUse = "timeUse";
+  static const isFirstOpenPrankReels = "isFirstOpenPrankReels";
 }

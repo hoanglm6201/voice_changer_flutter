@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +20,7 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+
   int _selectedIndex = 0;
 
   final List<Widget Function()> _screenBuilders = [
@@ -43,7 +45,7 @@ class _MainViewState extends State<MainView> {
       appBar: AppBarCustom(
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icUpload),
-          onPressed: () {},
+          onPressed: () async {},
           style: const IconButtonCustomStyle(
             backgroundColor: Colors.white,
             borderRadius: 15,

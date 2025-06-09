@@ -4,7 +4,7 @@ import 'package:voice_changer_flutter/core/res/colors.dart';
 class GradientButtonStyle {
   final Gradient? gradient;
   final BoxShape shape;
-  final Border? border;
+  final BoxBorder? border;
   final BorderRadius? borderRadius;
   final List<BoxShadow>? boxShadow;
 
