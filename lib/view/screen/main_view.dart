@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,7 +19,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-
   int _selectedIndex = 0;
 
   final List<Widget Function()> _screenBuilders = [
@@ -38,19 +36,137 @@ class _MainViewState extends State<MainView> {
     return _screens[index]!;
   }
 
+  void _handleUploadOption(String option) {
+    switch (option) {
+      case 'audio':
+        // Handle audio upload
+        print('Audio option selected');
+        // Implement audio file picker logic here
+        break;
+      case 'pdf':
+        // Handle PDF upload
+        print('PDF option selected');
+        // Implement PDF file picker logic here
+        break;
+      case 'video':
+        // Handle video upload
+        print('Video option selected');
+        // Implement video file picker logic here
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _getScreenAt(_selectedIndex);
     return Scaffold(
       appBar: AppBarCustom(
-        leading: IconButtonCustom(
-          icon: SvgPicture.asset(ResIcon.icUpload),
-          onPressed: () async {},
-          style: const IconButtonCustomStyle(
-            backgroundColor: Colors.white,
-            borderRadius: 15,
-            padding: EdgeInsets.all(11.0),
+        leading: PopupMenuButton<String>(
+          offset: Offset(0, 35),
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
+          // Thêm padding cho toàn bộ menu
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: IconButtonCustom(
+            icon: SvgPicture.asset(ResIcon.icUpload),
+            onPressed: null,
+          ),
+          onSelected: (String value) {
+            _handleUploadOption(value);
+          },
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem<String>(
+              value: 'audio',
+              height: 40,
+              child: Row(
+                children: [
+                  Image.asset(
+                    ResImages.iconHeadphones,
+                    width: 20,
+                    height: 20,
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    'Audio',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem<String>(
+              enabled: false,
+              padding: EdgeInsets.zero,
+              height: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(
+                  height: 1,
+                  thickness: 0.5,
+                  color: ResColors.colorGray,
+                ),
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'pdf',
+              height: 40,
+              child: Row(
+                children: [
+                  Image.asset(
+                    ResImages.iconPdfFile,
+                    width: 20,
+                    height: 20,
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    'PDF File',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem<String>(
+              enabled: false,
+              padding: EdgeInsets.zero,
+              height: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(
+                  height: 1,
+                  thickness: 0.5,
+                  color: ResColors.colorGray.withValues(alpha: 0.1),
+                ),
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'video',
+              height: 40,
+              child: Row(
+                children: [
+                  Image.asset(
+                    ResImages.iconVideo,
+                    width: 20,
+                    height: 20,
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    'Video',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButtonCustom(
