@@ -40,6 +40,9 @@ class ResImages {
   static const String iconRate = '${_basePath}img_icon_rate.png';
   static const String iconPolicy = '${_basePath}img_icon_policy.png';
   static const String iconTermsOfUser = '${_basePath}img_icon_terms_of_user.png';
+  static const String iconVideo = '${_basePath}img_icon_video.png';
+  static const String iconPdfFile = '${_basePath}img_icon_pdf_file.png';
+  static const String iconHeadphones = '${_basePath}img_icon_headphones.png';
 
   // Cartoon images
   static const String daffiDuck = '${_cartoonPath}Daffi Duck.jpg';
