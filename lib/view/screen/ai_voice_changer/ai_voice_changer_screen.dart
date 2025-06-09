@@ -111,7 +111,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
       AiVoicePreviewScreen(
         voiceModel: widget.voiceModel,
         isAudio: isAudioRecord,
-        path: finalPath,),
+        path: finalPath, isAIVoiceChanger: widget.isAIVoiceChanger,),
       )
     );
   }

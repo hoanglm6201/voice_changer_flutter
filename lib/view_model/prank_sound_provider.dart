@@ -7,6 +7,9 @@ import 'package:voice_changer_flutter/core/utils/locator_support.dart';
 class PrankSoundProvider with ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
+  String _audioPath = 'audio_test.mp3';
+  String get audioPath => _audioPath;
+
   int _countdown = 0;
   int get countdown => _countdown;
 
@@ -39,7 +42,6 @@ class PrankSoundProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   PrankSoundProvider() {
     _audioPlayer.onPlayerComplete.listen((event) {
       print(_isLoop);
@@ -51,6 +53,11 @@ class PrankSoundProvider with ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  void updateAudioPath(String value){
+    _audioPath = value;
+    notifyListeners();
   }
 
   // ========== Audio ==========
@@ -108,7 +115,7 @@ class PrankSoundProvider with ChangeNotifier {
     print('start');
 
     if (_selectedDuration == Duration.zero) {
-      await play('audio_test.mp3', isAsset: true);
+      await play(_audioPath, isAsset: true);
       return;
     }
     _isTimerSet = true;
@@ -123,7 +130,7 @@ class PrankSoundProvider with ChangeNotifier {
       } else {
         timer.cancel();
         debugPrint('Countdown finished');
-        await play('audio_test.mp3', isAsset: true);
+        await play(_audioPath, isAsset: true);
         _isTimerSet = false;
       }
       notifyListeners();

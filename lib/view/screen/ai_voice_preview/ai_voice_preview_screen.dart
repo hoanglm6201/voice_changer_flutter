@@ -10,6 +10,7 @@ import 'package:voice_changer_flutter/data/model/voice_model.dart';
 import 'package:voice_changer_flutter/view/screen/ai_voice_preview/processing_screen.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_video.dart';
 import 'package:voice_changer_flutter/view/screen/result/widget/file_voice.dart';
+import 'package:voice_changer_flutter/view/screen/voice_effect/voice_effect_screen.dart';
 import 'package:voice_changer_flutter/view/widgets/appbar/app_bar_custom.dart';
 import 'package:voice_changer_flutter/view/widgets/button/icon_button.dart';
 
@@ -17,7 +18,8 @@ class AiVoicePreviewScreen extends StatefulWidget {
   final VoiceModel voiceModel;
   final bool isAudio;
   final String? path;
-  const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio, this.path});
+  final bool isAIVoiceChanger;
+  const AiVoicePreviewScreen({super.key, required this.voiceModel, required this.isAudio, this.path, required this.isAIVoiceChanger});
 
   @override
   State<AiVoicePreviewScreen> createState() => _AiVoicePreviewScreenState();
@@ -104,6 +106,11 @@ class _AiVoicePreviewScreenState extends State<AiVoicePreviewScreen> {
           Expanded(
             child: GestureDetector(
               onTap: () async {
+                /// NẾU KHÔNG PHẢI LÀ AIVOICHANGER THÌ NAVIGATE QUA VOICECHANGER
+                if(!widget.isAIVoiceChanger){
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => VoiceEffectScreen()));
+                  return;
+                }
                 if (!widget.isAudio) {
                   _videoKey.currentState?.pauseVideo();
                 }else{
