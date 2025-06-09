@@ -128,7 +128,7 @@ class _AiVoiceChangerScreenState extends State<AiVoiceChangerScreen> {
     bool isAudioRecord = recordMode == RecordMode.audio;
     return Scaffold(
       appBar: AppBarCustom(
-        title: isRecording ? _buildTimeUI(_timer) : Text(context.locale.ai_voice_changer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        title: isRecording ? _buildTimeUI(_timer) : Text(widget.isAIVoiceChanger ? context.locale.ai_voice_changer : context.locale.voice_changer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
         leading: IconButtonCustom(
           icon: SvgPicture.asset(ResIcon.icBack),
           onPressed: () {
