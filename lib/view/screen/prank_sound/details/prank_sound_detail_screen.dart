@@ -1,6 +1,7 @@
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:voice_changer_flutter/core/res/colors.dart';
 import 'package:voice_changer_flutter/core/res/icons.dart';
@@ -176,7 +177,7 @@ class _PrankSoundDetailScreenState extends State<PrankSoundDetailScreen> {
     return  CarouselSlider(
       controller: _controller,
       options: CarouselOptions(
-        height: screenWidth * 0.45,
+        height: screenWidth * 0.48,
         enlargeCenterPage: true,
         enableInfiniteScroll: true,
         viewportFraction: 0.41,
@@ -202,9 +203,23 @@ class _PrankSoundDetailScreenState extends State<PrankSoundDetailScreen> {
             alignment: Alignment.bottomCenter,
             child: Opacity(
               opacity: isSelected ? 1 :0.3,
-              child: PrankSoundItem(
-                prankSoundModel: sound,
-                isShadow: false,
+              child: Stack(
+                children: [
+                  PrankSoundItem(
+                    prankSoundModel: sound,
+                    isShadow: false,
+                  ),
+                  Consumer<PrankSoundProvider>(
+                    builder: (BuildContext context, PrankSoundProvider value, Widget? child) {
+                      return isSelected && value.isPlaying ?Positioned(
+                        top: 20,
+                        left: 0,
+                        right: 0,
+                        child: Lottie.asset('assets/anim/audio_round.json', height: 130)
+                      ): SizedBox.shrink();
+                    },
+                  )
+                ],
               ),
             ),
           ),
